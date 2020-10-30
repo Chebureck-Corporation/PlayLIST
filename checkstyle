@@ -21,6 +21,14 @@ if [ $CI ]; then
       -reporter="github-pr-review" \
       -fail-on-error="true"
 else
-  java -jar $CHECKSTYLE_BIN ./ -c .github/workflows/assets/android_checkstyle.xml "$@"
+    java -jar $CHECKSTYLE_BIN ./app \
+      -e ./app/build \
+      -e ./app/src/main/res/mipmap-xxxhdpi \
+      -e ./app/src/main/res/mipmap-xxhdpi \
+      -e ./app/src/main/res/mipmap-xhdpi \
+      -e ./app/src/main/res/mipmap-mdpi \
+      -e ./app/src/main/res/mipmap-hdpi \
+      -c .github/workflows/assets/android_checkstyle.xml \
+      "$@"
 fi
 echo "Done!"
