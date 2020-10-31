@@ -2,8 +2,11 @@ package classes
 
 import interfaces.Playlist
 
-class PlaylistClass(private var name: String, private var tracks: ArrayList<Track>,
-                    private val id: Int) : Playlist {
+class PlaylistClass(
+    private var name: String,
+    private var tracks: ArrayList<Track>,
+    private val id: Int
+) : Playlist {
     companion object {
         fun or(playlists: ArrayList<PlaylistClass>) {}
 
@@ -13,6 +16,7 @@ class PlaylistClass(private var name: String, private var tracks: ArrayList<Trac
 
         fun getNameById(id: Int) {}
     }
+
     override fun rename(newName: String) {
         TODO("Not yet implemented")
     }
