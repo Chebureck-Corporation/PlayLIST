@@ -1,19 +1,26 @@
 package interfaces
 
-//БД
-//таблица: список плейлистов
-//поля:
-//название плейлиста; ID
-//таблица: список треков
-//поля:
-//название трека, автор,  ID
-//таблица: плейлисты
-//поля: ID трека, ID плейлиста
+import classes.Track
+
+/* БД
+таблица: список плейлистов
+поля:
+название плейлиста; ID
+таблица: список треков
+поля:
+название трека, автор,  ID
+таблица: плейлисты
+поля: ID трека, ID плейлиста */
+
 
 interface Playlist {
+    var tracks: ArrayList<Track>
 
-    fun delete()
+    var name: String
 
-    fun rename(newName: String)
+    val id: Int
 
+    fun deleteTrack(trackId: Int)
+
+    fun addTrack(trackId: Int)
 }
