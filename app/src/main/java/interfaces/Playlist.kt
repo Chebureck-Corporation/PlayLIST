@@ -11,8 +11,6 @@ import classes.Track
 название трека, автор,  ID
 таблица: плейлисты
 поля: ID трека, ID плейлиста */
-
-
 interface Playlist {
     var tracks: ArrayList<Track>
 
