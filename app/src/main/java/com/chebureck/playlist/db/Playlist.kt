@@ -1,6 +1,4 @@
-package interfaces
-
-import classes.Track
+package com.chebureck.playlist.db
 
 /* БД
 таблица: плейлисты
