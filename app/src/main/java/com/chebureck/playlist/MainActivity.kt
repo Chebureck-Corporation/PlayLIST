@@ -1,4 +1,4 @@
-package com.chebureck_corporation.playlist.mainactivity
+package com.chebureck.playlist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

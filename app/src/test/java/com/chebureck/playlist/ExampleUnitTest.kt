@@ -1,4 +1,4 @@
-package com.chebureck_corporation.playlist.mainactivity
+package com.chebureck.playlist
 
 import org.junit.Assert.*
 import org.junit.Test
