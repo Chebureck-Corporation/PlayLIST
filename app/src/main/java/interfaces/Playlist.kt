@@ -3,16 +3,16 @@ package interfaces
 import classes.Track
 
 /* БД
-таблица: список плейлистов
+таблица: плейлисты
 поля:
 название плейлиста; ID
-таблица: список треков
+таблица: треки
 поля:
 название трека, автор,  ID
-таблица: плейлисты
+таблица: плейлисты_треки
 поля: ID трека, ID плейлиста */
 interface Playlist {
-    var tracks: ArrayList<Track>
+    var tracks: List<Track>
 
     var name: String
 
