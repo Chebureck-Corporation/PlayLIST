@@ -1,49 +1,17 @@
 package com.chebureck.playlist.network
 
-import androidx.annotation.IntDef
 import com.chebureck.playlist.db.Playlist
+import com.chebureck.playlist.network.states.ReceivingPlaylistsState
+import com.chebureck.playlist.network.states.SendingPlaylistState
 
 interface ServiceManager {
-    fun getPlaylists(playlistsGetListener: PlaylistsGetListener)
+    fun getPlaylists(playlistsListener: (state: ReceivingPlaylistsState) -> Unit)
 
-    fun sendPlaylist(playlist: Playlist, sendListener: PlaylistSendListener?)
+    fun sendPlaylist(
+        playlist: Playlist,
+        sendingListener: ((state: SendingPlaylistState) -> Unit)?
+    )
 
     @ServiceType
     fun getServiceType(): Int
-}
-
-interface PlaylistsGetListener {
-    fun onReceivePlaylistsSuccess(
-        playlists: List<Playlist>,
-        handler: ServiceManager,
-        @GetPlaylistsResult result: Int
-    )
-}
-
-interface PlaylistSendListener {
-    fun onSendPlaylistResult(@SendPlaylistResult result: Int)
-}
-
-@IntDef(
-    GetPlaylistsResult.OK,
-    GetPlaylistsResult.UNKNOWN_ERROR
-)
-@Retention(AnnotationRetention.SOURCE)
-annotation class GetPlaylistsResult {
-    companion object GetPlaylistsResult {
-        const val OK = 0
-        const val UNKNOWN_ERROR = 1
-    }
-}
-
-@IntDef(
-    SendPlaylistResult.OK,
-    SendPlaylistResult.UNKNOWN_ERROR
-)
-@Retention(AnnotationRetention.SOURCE)
-annotation class SendPlaylistResult {
-    companion object SendPlaylistResult {
-        const val OK = 0
-        const val UNKNOWN_ERROR = 1
-    }
 }
