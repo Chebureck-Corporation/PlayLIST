@@ -1,6 +1,5 @@
 package com.chebureck.playlist.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -44,5 +43,5 @@ data class PlaylistWithTracks(
         entityColumn = TRACK_ID_FIELD,
         associateBy = Junction(PlaylistAndTrackEntity::class)
     )
-    val tracks: LiveData<List<TrackEntity>>
+    val tracks: List<TrackEntity>
 )
