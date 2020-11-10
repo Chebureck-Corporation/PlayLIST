@@ -1,7 +1,7 @@
 package com.chebureck.playlist.db
 
-interface Playlist {
-    var tracks: List<Track>
+interface Playlists {
+    var tracks: List<Tracks>
 
     var name: String
 
