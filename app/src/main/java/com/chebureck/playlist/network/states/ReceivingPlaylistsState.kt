@@ -1,11 +1,11 @@
 package com.chebureck.playlist.network.states
 
-import com.chebureck.playlist.db.Playlists
+import com.chebureck.playlist.db.Playlist
 
 sealed class ReceivingPlaylistsState
 
 data class PlaylistsReadyState(
-    val playlists: List<Playlists>
+    val playlists: List<Playlist>
 ) : ReceivingPlaylistsState()
 
 data class ReceivePlaylistsErrorState(

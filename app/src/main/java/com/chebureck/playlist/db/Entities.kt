@@ -19,13 +19,13 @@ const val PLAYLIST_ID_FIELD: String = "playlist_id"
 const val TRACK_ID_FIELD: String = "track_id"
 
 @Entity(tableName = PLAYLIST_ENTITY)
-data class Playlist(
+data class PlaylistEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val name: String
 )
 
 @Entity(tableName = TRACK_ENTITY)
-data class Track(
+data class TrackEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val name: String,
     val author: String
@@ -35,12 +35,12 @@ data class Track(
     tableName = PLAYLIST_TRACK_ENTITY,
     foreignKeys = [
         ForeignKey(
-            entity = Playlist::class,
+            entity = PlaylistEntity::class,
             parentColumns = [ID_FIELD],
             childColumns = [PLAYLIST_ID_FIELD],
             onDelete = CASCADE
         ), ForeignKey(
-            entity = Track::class,
+            entity = TrackEntity::class,
             parentColumns = [ID_FIELD],
             childColumns = [TRACK_ID_FIELD],
             onDelete = CASCADE

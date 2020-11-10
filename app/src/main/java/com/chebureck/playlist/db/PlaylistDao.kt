@@ -6,39 +6,36 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 
 @Dao
 interface PlaylistDao {
     @Query("SELECT * FROM $PLAYLIST_TRACK_ENTITY WHERE $PLAYLIST_ID_FIELD == :playlistId")
-    fun getTracksOfPlaylist(playlistId: Long): LiveData<List<Track>>
+    fun getTracksOfPlaylist(playlistId: Long): LiveData<List<TrackEntity>>
 
     @Query("SELECT * FROM $TRACK_ENTITY WHERE $ID_FIELD == :trackId")
-    fun getTrackById(trackId: Long): Track
+    fun getTrackById(trackId: Long): TrackEntity
 
     @Query("SELECT * FROM $PLAYLIST_ENTITY")
-    fun getPlaylists(): LiveData<List<Playlist>>
+    fun getPlaylists(): LiveData<List<PlaylistEntity>>
 
     @Query("SELECT * FROM $PLAYLIST_ENTITY WHERE $ID_FIELD == :playlistId")
-    fun getPlaylistById(playlistId: Long): Playlist
+    fun getPlaylistById(playlistId: Long): PlaylistEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addPlaylist(playlist: Playlist)
+    fun addPlaylist(playlistEntity: PlaylistEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTrack(track: Track)
+    fun addTrack(trackEntity: TrackEntity)
 
     @Update
-    fun updatePlaylist(playlist: Playlist)
+    fun updatePlaylist(playlistEntity: PlaylistEntity)
 
-    @Transaction
     @Delete
-    fun deleteTrack(track: Track)
+    fun deleteTrack(trackEntity: TrackEntity)
 
-    @Transaction
     @Delete
-    fun deletePlaylist(playlist: Playlist)
+    fun deletePlaylist(playlistEntity: PlaylistEntity)
 
     @Query("INSERT INTO $PLAYLIST_TRACK_ENTITY VALUES (:playlistId, :trackId)")
     fun trackToPlaylist(playlistId: Long, trackId: Long)

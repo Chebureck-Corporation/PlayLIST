@@ -1,6 +1,6 @@
 package com.chebureck.playlist.db
 
-interface Tracks {
+interface Track {
     val name: String
     val author: String
     val id: Int
