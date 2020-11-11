@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="260sp"
+                android:layout_height="30sp"
+                android:background="@drawable/name_border"
+                android:text="@string/playlist_name"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+        <TextView
+                android:layout_width="50sp"
+                android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="49dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_button"
+                android:backgroundTint="@color/black"
+                android:gravity="center_horizontal"
+                android:text="@string/dots"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
