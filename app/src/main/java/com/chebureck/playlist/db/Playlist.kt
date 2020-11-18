@@ -1,11 +1,9 @@
 package com.chebureck.playlist.db
 
 interface Playlist {
-    var tracks: List<Track>
+    val name: String
 
-    var name: String
-
-    val id: Int
+    val id: Long
 
     fun deleteTrack(trackId: Int)
 

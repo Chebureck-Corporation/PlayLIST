@@ -21,7 +21,7 @@ const val TRACK_ID_FIELD: String = "track_id"
 @Entity(tableName = PLAYLIST_ENTITY)
 data class PlaylistEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    val name: String
+    var name: String
 )
 
 @Entity(tableName = TRACK_ENTITY)
