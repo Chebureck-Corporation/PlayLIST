@@ -3,7 +3,7 @@ package com.chebureck.playlist.db
 import androidx.lifecycle.MutableLiveData
 
 data class PlaylistWrapper(
-    private val playlistEntity: PlaylistEntity,
+    private val playlistEntity: PlaylistEntity
 ) : Playlist {
     lateinit var tracks: MutableLiveData<MutableList<TrackWrapper>>
 
