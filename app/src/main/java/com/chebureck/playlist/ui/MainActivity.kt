@@ -1,7 +1,8 @@
-package com.chebureck.playlist
+package com.chebureck.playlist.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.chebureck.playlist.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
