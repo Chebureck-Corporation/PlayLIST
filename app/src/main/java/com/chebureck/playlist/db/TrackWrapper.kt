@@ -7,7 +7,7 @@ data class TrackWrapper(
         get() = trackEntity.name
     override val author: String
         get() = trackEntity.author
-    override val id: Long
+    override val id: String
         get() = trackEntity.id
 
     override fun toString(): String {

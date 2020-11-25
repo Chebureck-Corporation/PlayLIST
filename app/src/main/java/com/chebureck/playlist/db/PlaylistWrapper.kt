@@ -10,6 +10,6 @@ data class PlaylistWrapper(
     override val name: String
         get() = playlistEntity.name
 
-    override val id: Long
+    override val id: String
         get() = playlistEntity.id
 }

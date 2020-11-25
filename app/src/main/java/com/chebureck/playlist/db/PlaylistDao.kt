@@ -42,5 +42,5 @@ interface PlaylistDao {
     fun deletePlaylist(playlistEntity: PlaylistEntity)
 
     @Query("INSERT INTO $PLAYLIST_TRACK_ENTITY ($PLAYLIST_ID_FIELD, $TRACK_ID_FIELD) VALUES (:playlistId, :trackId)")
-    fun trackToPlaylist(playlistId: Long, trackId: Long)
+    fun trackToPlaylist(playlistId: String, trackId: String)
 }
