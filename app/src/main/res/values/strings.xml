@@ -2,4 +2,6 @@
     <string name="app_name">PlayLIST</string>
     <string name="dots">…</string>
     <string name="playlist_name">Название плейлиста</string>
+    <string name="string_login">Log in to account</string>
+    <string name="string_sign">Sign in with Spotify</string>
 </resources>

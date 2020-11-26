@@ -1,0 +1,4 @@
+<resources>
+    <string name="string_login">Войдите в аккаунт</string>
+    <string name="string_sign">Вход через Spotify.</string>
+</resources>
