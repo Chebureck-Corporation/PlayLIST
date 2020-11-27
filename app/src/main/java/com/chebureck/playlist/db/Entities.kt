@@ -20,13 +20,13 @@ const val TRACK_ID_FIELD: String = "track_id"
 
 @Entity(tableName = PLAYLIST_ENTITY)
 data class PlaylistEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
-    val name: String
+    @PrimaryKey val id: String,
+    var name: String
 )
 
 @Entity(tableName = TRACK_ENTITY)
 data class TrackEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey val id: String,
     val name: String,
     val author: String
 )
@@ -48,6 +48,7 @@ data class TrackEntity(
     ]
 )
 data class PlaylistAndTrack(
+    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = PLAYLIST_ID_FIELD) val playlistId: Long,
     @ColumnInfo(name = TRACK_ID_FIELD) val trackId: Long
 )

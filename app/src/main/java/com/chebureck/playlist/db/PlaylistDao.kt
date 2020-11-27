@@ -10,7 +10,11 @@ import androidx.room.Update
 
 @Dao
 interface PlaylistDao {
-    @Query("SELECT * FROM $PLAYLIST_TRACK_ENTITY WHERE $PLAYLIST_ID_FIELD == :playlistId")
+    @Query(
+        "SELECT $TRACK_ENTITY.* FROM (SELECT * FROM $PLAYLIST_TRACK_ENTITY WHERE " +
+            "$PLAYLIST_TRACK_ENTITY.playlist_id == :playlistId) as res_track_list LEFT JOIN " +
+            "$TRACK_ENTITY on res_track_list.track_id = $TRACK_ENTITY.id"
+    )
     fun getTracksOfPlaylist(playlistId: Long): LiveData<List<TrackEntity>>
 
     @Query("SELECT * FROM $TRACK_ENTITY WHERE $ID_FIELD == :trackId")
@@ -37,6 +41,6 @@ interface PlaylistDao {
     @Delete
     fun deletePlaylist(playlistEntity: PlaylistEntity)
 
-    @Query("INSERT INTO $PLAYLIST_TRACK_ENTITY VALUES (:playlistId, :trackId)")
-    fun trackToPlaylist(playlistId: Long, trackId: Long)
+    @Query("INSERT INTO $PLAYLIST_TRACK_ENTITY ($PLAYLIST_ID_FIELD, $TRACK_ID_FIELD) VALUES (:playlistId, :trackId)")
+    fun trackToPlaylist(playlistId: String, trackId: String)
 }
