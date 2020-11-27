@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PlayLIST</string>
+    <string name="plus">+</string>
+    <string name="or">OR</string>
+    <string name="xor">XOR</string>
+    <string name="and">AND</string>
 </resources>
