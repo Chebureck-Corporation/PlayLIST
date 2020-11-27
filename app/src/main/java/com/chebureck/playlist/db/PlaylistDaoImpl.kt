@@ -82,19 +82,19 @@ class PlaylistDaoImpl(
         }
     }
 
-    fun trackToPlaylist(playlistId: Long, trackId: Long) {
+    fun trackToPlaylist(playlistId: String, trackId: String) {
         playlistDao.trackToPlaylist(playlistId, trackId)
         findTrackById(trackId)?.let { findPlaylistById(playlistId)?.tracks?.value?.add(it) }
     }
 
-    private fun findTrackById(trackId: Long): TrackWrapper? {
+    private fun findTrackById(trackId: String): TrackWrapper? {
         val index: Int? = trackList.value?.indexOfFirst {
             it.id == trackId
         }
         return index?.let { trackList.value?.get(it) }
     }
 
-    private fun findPlaylistById(playlistId: Long): PlaylistWrapper? {
+    private fun findPlaylistById(playlistId: String): PlaylistWrapper? {
         val index: Int? = playlistList.value?.indexOfFirst {
             it.id == playlistId
         }
