@@ -8,17 +8,18 @@ import com.chebureck.playlist.R
 class TrackViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
+    private val authorName: TextView = this.itemView.findViewById(R.id.text_author)
+    private val trackName: TextView = this.itemView.findViewById(R.id.text_song_name)
 
-    lateinit var authorName : TextView
-    lateinit var trackName : TextView
-
-    init {
-        authorName = this.itemView.findViewById(R.id.text_author)
-        trackName = this.itemView.findViewById(R.id.text_song_name)
+    fun listen(event: (position: Int) -> Unit): TrackViewHolder {
+        itemView.setOnClickListener {
+            event.invoke(adapterPosition)
+        }
+        return this
     }
 
-    fun bind(){
-        authorName.setText("")
-        trackName.setText("")
+    fun bind(author: String, track: String) {
+        authorName.text = author
+        trackName.text = track
     }
 }
