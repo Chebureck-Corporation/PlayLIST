@@ -9,15 +9,10 @@ class TrackViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
-    lateinit var authorName : TextView
-    lateinit var trackName : TextView
+    var authorName: TextView = itemView.findViewById(R.id.text_author)
+    var trackName: TextView = itemView.findViewById(R.id.text_song_name)
 
-    init {
-        authorName = this.itemView.findViewById(R.id.text_author)
-        trackName = this.itemView.findViewById(R.id.text_song_name)
-    }
-
-    fun bind(){
+    fun bind() {
         authorName.setText("")
         trackName.setText("")
     }

@@ -17,7 +17,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind();
+        holder.bind()
     }
 
     override fun getItemCount(): Int {
