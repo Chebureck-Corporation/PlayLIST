@@ -9,6 +9,15 @@ import androidx.fragment.app.Fragment
 import com.chebureck.playlist.R
 
 class AuthFragment : Fragment() {
+    interface AuthListener {
+        fun onSignInPressed()
+    }
+
+    private var listener: AuthListener? = null
+    fun setListener(listener: AuthListener?) {
+        this.listener = listener
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,5 +33,8 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val authButton = view.findViewById<Button>(R.id.btn_sign)
+        authButton.setOnClickListener {
+            listener?.onSignInPressed()
+        }
     }
 }
