@@ -22,9 +22,7 @@ class PlaylistListFragment(
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_playlists
-            , container
-            , false
+            R.layout.fragment_playlists, container, false
         )
     }
 

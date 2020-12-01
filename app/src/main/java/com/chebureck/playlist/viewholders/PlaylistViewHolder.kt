@@ -1,12 +1,9 @@
 package com.chebureck.playlist.viewholders
 
-import android.content.ClipData
-import android.content.ClipDescription
-import android.graphics.Color
-import android.view.DragEvent
+import android.content.Context
 import android.view.View
-import android.view.View.DragShadowBuilder
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 
@@ -14,18 +11,11 @@ import com.chebureck.playlist.R
 class PlaylistViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
+    private val context: Context = itemView.context.applicationContext
 
     init {
         itemView.setOnLongClickListener {
-            val cliptext = "This is our ClipData text"
-            val item = ClipData.Item(cliptext)
-            val mimeTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
-            val data = ClipData(cliptext, mimeTypes, item)
-
-            val dragShadowBuilder = DragShadowBuilder(it)
-            it.startDragAndDrop(data, dragShadowBuilder, item, 0)
-
-            it.visibility = View.INVISIBLE
+            Toast.makeText(context, "Long clicked", Toast.LENGTH_SHORT).show()
             true
         }
     }
