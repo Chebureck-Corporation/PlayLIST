@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
-import com.chebureck.playlist.adapters.TrackAdapter
-import com.chebureck.playlist.db.TrackWrapper
+import com.chebureck.playlist.adapters.PlaylistAdapter
+import com.chebureck.playlist.db.PlaylistWrapper
 
-class TrackListFragment(
-    tracksList: List<TrackWrapper>
+class PlaylistListFragment(
+    playlistsList: List<PlaylistWrapper>
 ) : Fragment() {
-    private val tracks = tracksList
+    private val playlists = playlistsList
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,15 +22,18 @@ class TrackListFragment(
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_tracks_screen, container, false
+            R.layout.fragment_playlists, container, false
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recycler: RecyclerView = view.findViewById(R.id.recycler_tracks)
-        val adapter = TrackAdapter(tracks)
+        val recycler: RecyclerView = view.findViewById(R.id.recycler)
+        val adapter = PlaylistAdapter(playlists)
         recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.layoutManager = GridLayoutManager(
+            requireContext(),
+            resources.getInteger(R.integer.columns)
+        )
     }
 }
