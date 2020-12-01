@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
-import com.chebureck.playlist.db.PlaylistWrapper
+import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
 class PlaylistAdapter(
-    playlistsList: List<PlaylistWrapper>
+    playlistsList: List<Playlist>
 ) : RecyclerView.Adapter<PlaylistViewHolder>() {
     private val playlists = playlistsList
 
