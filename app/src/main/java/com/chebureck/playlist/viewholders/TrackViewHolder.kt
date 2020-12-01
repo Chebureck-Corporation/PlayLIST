@@ -8,8 +8,8 @@ import com.chebureck.playlist.R
 class TrackViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
-    private val authorName: TextView = this.itemView.findViewById(R.id.text_author)
-    private val trackName: TextView = this.itemView.findViewById(R.id.text_song_name)
+    var authorName: TextView = itemView.findViewById(R.id.text_author)
+    var trackName: TextView = itemView.findViewById(R.id.text_song_name)
 
     fun listen(event: (position: Int) -> Unit): TrackViewHolder {
         itemView.setOnClickListener {
