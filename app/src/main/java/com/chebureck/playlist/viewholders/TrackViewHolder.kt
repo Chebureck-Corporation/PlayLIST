@@ -13,7 +13,7 @@ class TrackViewHolder(
     var trackName: TextView = itemView.findViewById(R.id.text_song_name)
 
     fun bind() {
-        authorName.setText("")
-        trackName.setText("")
+        authorName.text = ""
+        trackName.text = ""
     }
 }
