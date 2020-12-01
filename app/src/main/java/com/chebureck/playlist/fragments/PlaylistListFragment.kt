@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.adapters.PlaylistAdapter
+import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.db.PlaylistWrapper
+import com.chebureck.playlist.ui.presenter.MainActivityPresenter
 
-class PlaylistListFragment(
-    playlistsList: List<PlaylistWrapper>
-) : Fragment() {
-    private val playlists = playlistsList
-
+class PlaylistListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,5 +33,9 @@ class PlaylistListFragment(
             requireContext(),
             resources.getInteger(R.integer.columns)
         )
+    }
+
+    companion object {
+        var playlists: List<Playlist> = listOf()
     }
 }

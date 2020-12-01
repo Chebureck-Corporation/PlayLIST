@@ -3,12 +3,16 @@ package com.chebureck.playlist.ui.presenter
 import android.app.Activity
 import android.content.Intent
 import com.chebureck.playlist.fragments.AuthFragment
+import com.chebureck.playlist.fragments.PlaylistListFragment
 import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
 import com.chebureck.playlist.ui.repository.SpotifyRepository
 import com.chebureck.playlist.ui.view.MainActivity
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivityPresenter(
     private val mainActivity: MainActivity
@@ -19,6 +23,7 @@ class MainActivityPresenter(
         SPOTIFY_CLIENT_ID
     )
     private val spotifyRepository = SpotifyRepository()
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun onCreate() {
         mainActivity.replaceRootFragmentByFragment(AuthFragment().apply {
@@ -51,7 +56,13 @@ class MainActivityPresenter(
     }
 
     private fun onSuccessfulAuth() {
-
+        ioScope.launch {
+            val id = spotifyApiManager?.getMe()?.id ?: ""
+            PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
+            launch(Dispatchers.Main.immediate) {
+                mainActivity.replaceRootFragmentByFragment(PlaylistListFragment())
+            }
+        }
     }
 
     companion object {
