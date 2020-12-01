@@ -2,10 +2,11 @@ package com.chebureck.playlist.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.chebureck.playlist.db.PlaylistDatabase.Companion.DATABASE_VERSION
 
 @Database(
     entities = [PlaylistEntity::class, TrackEntity::class, PlaylistAndTrack::class],
-    version = 1,
+    version = DATABASE_VERSION,
     exportSchema = false
 )
 abstract class PlaylistDatabase : RoomDatabase() {
@@ -13,5 +14,7 @@ abstract class PlaylistDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME: String = "playlist_database"
+
+        const val DATABASE_VERSION = 1
     }
 }

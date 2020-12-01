@@ -48,7 +48,7 @@ data class TrackEntity(
     ]
 )
 data class PlaylistAndTrack(
-    @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = PLAYLIST_ID_FIELD) val playlistId: Long,
-    @ColumnInfo(name = TRACK_ID_FIELD) val trackId: Long
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = PLAYLIST_ID_FIELD) val playlistId: String,
+    @ColumnInfo(name = TRACK_ID_FIELD) val trackId: String
 )

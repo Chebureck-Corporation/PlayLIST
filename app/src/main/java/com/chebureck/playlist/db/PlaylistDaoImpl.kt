@@ -11,14 +11,14 @@ class PlaylistDaoImpl(
 
     lateinit var trackList: MutableLiveData<MutableList<TrackWrapper>>
 
-    fun getTrackById(id: Long): TrackWrapper {
+    fun getTrackById(id: String): TrackWrapper {
         val trackEntity = playlistDao.getTrackById(id)
         return TrackWrapper(trackEntity)
     }
 
     fun getTracksByPlaylist(
         lifecycleOwner: LifecycleOwner,
-        playlistId: Long
+        playlistId: String
     ): LiveData<List<TrackWrapper>> {
         val tracksOfPlaylist = playlistDao.getTracksOfPlaylist(playlistId)
         val p = MutableLiveData<List<TrackWrapper>>()
@@ -43,7 +43,7 @@ class PlaylistDaoImpl(
         return p
     }
 
-    fun getPlaylistById(playlistId: Long): PlaylistWrapper {
+    fun getPlaylistById(playlistId: String): PlaylistWrapper {
         val playlist = playlistDao.getPlaylistById(playlistId)
         return PlaylistWrapper(playlist)
     }

@@ -22,9 +22,7 @@ class TrackListFragment(
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_tracks_screen
-            , container
-            , false
+            R.layout.fragment_tracks_screen, container, false
         )
     }
 
