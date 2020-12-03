@@ -60,7 +60,7 @@ class MainActivityPresenter(
             val id = spotifyApiManager?.getMe()?.id ?: ""
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
-                mainActivity.replaceRootFragmentByFragment(PlaylistListFragment())
+                mainActivity.replaceRootFragmentByFragmentBackStack(PlaylistListFragment(PlaylistListFragment.Companion.State.VIEWING), null)
             }
         }
     }
