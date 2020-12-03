@@ -7,6 +7,7 @@
     <string name="dots">…</string>
     <string name="add">add</string>
     <string name="create">Create</string>
+    <string name="exit">Exit</string>
     <string name="playlist_name">Playlist name</string>
     <string name="string_login">Log in to account</string>
     <string name="string_sign">Sign in with Spotify</string>

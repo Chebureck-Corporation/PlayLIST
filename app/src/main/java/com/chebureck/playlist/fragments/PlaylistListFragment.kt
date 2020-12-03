@@ -1,10 +1,11 @@
 package com.chebureck.playlist.fragments
 
-import android.net.sip.SipSession
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
-import com.chebureck.playlist.ui.presenter.MainActivityPresenter
 import com.chebureck.playlist.ui.view.MainActivity
+
 
 class PlaylistListFragment private constructor(): Fragment() {
     override fun onCreateView(
@@ -39,18 +40,26 @@ class PlaylistListFragment private constructor(): Fragment() {
         val orButton: Button = view.findViewById(R.id.btn_or)
         val xorButton: Button = view.findViewById(R.id.btn_xor)
 
+        val recycler: RecyclerView = view.findViewById(R.id.recycler)
+        val adapter = PlaylistAdapter(playlists)
+
         val state: String? = arguments!!.getString(KEY_STRING)
         when (state) {
             State.VIEWING.name -> {
                 headerTV.visibility = View.GONE
                 andButton.visibility = View.GONE
-                orButton.visibility = View.GONE
+                orButton.setText(R.string.exit)
+                val mainActivity = activity as MainActivity
+                orButton.setOnClickListener{
+                    mainActivity.onBackPressed()
+                }
                 xorButton.visibility = View.GONE
-
+                val animation: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.animator_button)
+                plusButton.startAnimation(animation)
                 plusButton.setOnClickListener {
-                    val mainActivity = activity as MainActivity
                     mainActivity.replaceRootFragmentByFragmentBackStack(PlaylistListFragment(State.ADDING), null)
                 }
+
             }
             State.ADDING.name -> {
                 image.visibility = View.INVISIBLE
@@ -70,9 +79,6 @@ class PlaylistListFragment private constructor(): Fragment() {
                 plusButton.visibility = View.GONE
             }
         }
-
-        val recycler: RecyclerView = view.findViewById(R.id.recycler)
-        val adapter = PlaylistAdapter(playlists)
 
         recycler.adapter = adapter
         recycler.layoutManager = GridLayoutManager(
