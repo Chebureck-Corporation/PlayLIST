@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.EditText
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +19,7 @@ import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-
-class PlaylistListFragment private constructor(): Fragment() {
+class PlaylistListFragment private constructor() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,14 +33,13 @@ class PlaylistListFragment private constructor(): Fragment() {
     interface PlayListListener {
         fun onExitPressed()
         fun onButtonPressed(state: State)
-        fun onItemClicked(id : String)
+        fun onItemClicked(id: String)
     }
 
     private var listener: PlayListListener? = null
     fun setListener(listener: PlayListListener?) {
         this.listener = listener
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,26 +51,31 @@ class PlaylistListFragment private constructor(): Fragment() {
         val orButton: Button = view.findViewById(R.id.btn_or)
         val xorButton: Button = view.findViewById(R.id.btn_xor)
 
-        val recycler: RecyclerView = view.findViewById(R.id.recycler)
-        val adapter = PlaylistAdapter(playlists, ItemClickHandler())
+        val recycler: RecyclerView =
+            view.findViewById(R.id.recycler)
+        val adapter = PlaylistAdapter(playlists,
+            ItemClickHandler()
+        )
 
         when (arguments!!.getString(KEY_STRING)) {
             State.VIEWING.name -> {
                 headerTV.visibility = View.GONE
                 andButton.visibility = View.GONE
                 orButton.setText(R.string.exit)
-                orButton.setOnClickListener{
+                orButton.setOnClickListener {
                     Log.i("exit", "pressed")
                     listener?.onExitPressed()
-
                 }
                 xorButton.visibility = View.GONE
-                val animation: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.animator_button)
+                val animation: Animation = AnimationUtils
+                    .loadAnimation(
+                        requireContext(),
+                        R.anim.animator_button
+                    )
                 plusButton.startAnimation(animation)
                 plusButton.setOnClickListener {
                     listener?.onButtonPressed(State.CREATING)
                 }
-
             }
             State.CREATING.name -> {
                 image.visibility = View.INVISIBLE
@@ -82,14 +88,13 @@ class PlaylistListFragment private constructor(): Fragment() {
             requireContext(),
             resources.getInteger(R.integer.columns)
         )
-
     }
 
     companion object {
         var playlists: List<Playlist> = listOf()
         val KEY_STRING: String = "state"
 
-        operator fun invoke(state: State) : PlaylistListFragment{
+        operator fun invoke(state: State): PlaylistListFragment {
             val fragment = PlaylistListFragment()
             val args = Bundle()
             args.putString(KEY_STRING, state.name)
@@ -97,14 +102,14 @@ class PlaylistListFragment private constructor(): Fragment() {
             return fragment
         }
 
-        enum class State{
+        enum class State {
             VIEWING, CREATING
         }
     }
 
-    inner class ItemClickHandler: PlaylistViewHolder.IListener {
+    inner class ItemClickHandler : PlaylistViewHolder.IListener {
         override fun onItemClicked(position: Int) {
-            val string  = playlists[position].name
+            val string = playlists[position].name
             Log.i("onItemClicked", string)
             listener?.onItemClicked(string)
         }

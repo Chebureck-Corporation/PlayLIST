@@ -9,7 +9,8 @@ import com.chebureck.playlist.R
 
 
 class PlaylistViewHolder(
-    itemView: View, iListener: IListener
+    itemView: View,
+    iListener: IListener
 ) : RecyclerView.ViewHolder(itemView) {
     private val context: Context = itemView.context.applicationContext
 

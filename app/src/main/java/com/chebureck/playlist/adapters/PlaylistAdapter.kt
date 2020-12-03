@@ -10,7 +10,8 @@ import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
 class PlaylistAdapter(
-    playlistsList: List<Playlist>, iListener: PlaylistViewHolder.IListener
+    playlistsList: List<Playlist>,
+    iListener: PlaylistViewHolder.IListener
 ) : RecyclerView.Adapter<PlaylistViewHolder>() {
     private val playlists = playlistsList
     private val listener = iListener

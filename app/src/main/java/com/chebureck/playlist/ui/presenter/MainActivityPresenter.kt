@@ -79,13 +79,24 @@ class MainActivityPresenter(
         mainActivity.onBackPressed()
     }
 
-    override fun onButtonPressed(state: PlaylistListFragment.Companion.State) {
+    override fun onButtonPressed(
+        state: PlaylistListFragment.Companion.State
+    ) {
         Log.i("onButtonPressed", "presenter")
-        mainActivity.replaceRootFragmentByFragmentBackStack(PlaylistListFragment(state).apply { setListener(this@MainActivityPresenter) }, null)
+        mainActivity.replaceRootFragmentByFragmentBackStack(
+            PlaylistListFragment(state)
+                .apply {
+                    setListener(this@MainActivityPresenter)
+                },
+            null
+        )
     }
 
     override fun onItemClicked(playlistName: String) {
         //TODO get playlist
-        mainActivity.replaceRootFragmentByFragmentBackStack(TrackListFragment(playlistName), null)
+        mainActivity.replaceRootFragmentByFragmentBackStack(
+            TrackListFragment(playlistName),
+            null
+        )
     }
 }

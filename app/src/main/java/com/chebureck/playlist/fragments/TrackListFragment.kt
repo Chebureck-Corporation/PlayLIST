@@ -13,7 +13,8 @@ import com.chebureck.playlist.adapters.TrackAdapter
 import com.chebureck.playlist.db.TrackWrapper
 
 class TrackListFragment(
-    private val string: String//, tracksList: List<TrackWrapper>
+    private val string: String
+    //, tracksList: List<TrackWrapper>
 ) : Fragment() {
     //private val tracks = tracksList
     override fun onCreateView(
