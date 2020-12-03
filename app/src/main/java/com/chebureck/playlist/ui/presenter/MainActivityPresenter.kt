@@ -2,8 +2,10 @@ package com.chebureck.playlist.ui.presenter
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import com.chebureck.playlist.fragments.AuthFragment
 import com.chebureck.playlist.fragments.PlaylistListFragment
+import com.chebureck.playlist.fragments.TrackListFragment
 import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
 import com.chebureck.playlist.ui.repository.SpotifyRepository
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class MainActivityPresenter(
     private val mainActivity: MainActivity
-) : AuthFragment.AuthListener {
+) : AuthFragment.AuthListener, PlaylistListFragment.PlayListListener {
     private var spotifyApiManager: SpotifyApiManager? = null
     private val spotifyAuthManager = SpotifyAuthManager(
         mainActivity as Activity,
@@ -60,7 +62,7 @@ class MainActivityPresenter(
             val id = spotifyApiManager?.getMe()?.id ?: ""
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
-                mainActivity.replaceRootFragmentByFragmentBackStack(PlaylistListFragment(PlaylistListFragment.Companion.State.VIEWING), null)
+                onButtonPressed(PlaylistListFragment.Companion.State.VIEWING)
             }
         }
     }
@@ -71,5 +73,19 @@ class MainActivityPresenter(
 
     override fun onSignInPressed() {
         auth()
+    }
+
+    override fun onExitPressed() {
+        mainActivity.onBackPressed()
+    }
+
+    override fun onButtonPressed(state: PlaylistListFragment.Companion.State) {
+        Log.i("onButtonPressed", "presenter")
+        mainActivity.replaceRootFragmentByFragmentBackStack(PlaylistListFragment(state).apply { setListener(this@MainActivityPresenter) }, null)
+    }
+
+    override fun onItemClicked(playlistName: String) {
+        //TODO get playlist
+        mainActivity.replaceRootFragmentByFragmentBackStack(TrackListFragment(playlistName), null)
     }
 }

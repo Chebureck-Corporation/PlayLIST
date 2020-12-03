@@ -9,14 +9,24 @@ import com.chebureck.playlist.R
 
 
 class PlaylistViewHolder(
-    itemView: View
+    itemView: View, iListener: IListener
 ) : RecyclerView.ViewHolder(itemView) {
     private val context: Context = itemView.context.applicationContext
+
+    interface IListener{
+        fun onItemClicked(position: Int)
+    }
 
     init {
         itemView.setOnLongClickListener {
             Toast.makeText(context, "Long clicked", Toast.LENGTH_SHORT).show()
             true
+        }
+
+        val listener = iListener
+
+        itemView.setOnClickListener{
+            listener.onItemClicked(adapterPosition)
         }
     }
 
