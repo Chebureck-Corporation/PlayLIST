@@ -36,13 +36,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-    <!-- TODO learn how to eliminate this warning problem -->
+    <!-- TODO learn how to eliminate this warning problem-->
     <Button
             android:id="@+id/btn_and"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:maxWidth="300dp"
 
             android:background="@drawable/button"
             android:text="@string/and"
