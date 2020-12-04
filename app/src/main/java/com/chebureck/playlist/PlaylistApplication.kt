@@ -14,7 +14,8 @@ class PlaylistApplication : Application() {
         synchronized(this) {
             playlistDatabase = Room.databaseBuilder(
                 applicationContext,
-                PlaylistDatabase::class.java, PlaylistDatabase.DATABASE_NAME
+                PlaylistDatabase::class.java,
+                PlaylistDatabase.DATABASE_NAME
             ).build()
             playlistDao = PlaylistDaoImpl(playlistDatabase.playlistDao()!!)
         }
