@@ -2,8 +2,11 @@ package com.chebureck.playlist.ui.presenter
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import com.chebureck.playlist.fragments.AuthFragment
+import com.chebureck.playlist.fragments.PlaylistCreateFragment
 import com.chebureck.playlist.fragments.PlaylistListFragment
+import com.chebureck.playlist.fragments.TrackListFragment
 import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
 import com.chebureck.playlist.ui.repository.SpotifyRepository
@@ -16,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class MainActivityPresenter(
     private val mainActivity: MainActivity
-) : AuthFragment.AuthListener {
+) : AuthFragment.AuthListener, PlaylistListFragment.PlayListListener, PlaylistCreateFragment.PlaylistCreateListener {
     private var spotifyApiManager: SpotifyApiManager? = null
     private val spotifyAuthManager = SpotifyAuthManager(
         mainActivity as Activity,
@@ -26,9 +29,12 @@ class MainActivityPresenter(
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun onCreate() {
-        mainActivity.replaceRootFragmentByFragment(AuthFragment().apply {
-            setListener(this@MainActivityPresenter)
-        })
+        mainActivity.replaceRootFragmentByFragment(
+            AuthFragment()
+                .apply {
+                    setListener(this@MainActivityPresenter)
+                }
+        )
     }
 
     private fun auth() {
@@ -60,7 +66,13 @@ class MainActivityPresenter(
             val id = spotifyApiManager?.getMe()?.id ?: ""
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
-                mainActivity.replaceRootFragmentByFragment(PlaylistListFragment())
+                mainActivity.replaceRootFragmentByFragmentBackStack(
+                    PlaylistListFragment()
+                        .apply {
+                            setListener(this@MainActivityPresenter)
+                        },
+                    null
+                )
             }
         }
     }
@@ -71,5 +83,30 @@ class MainActivityPresenter(
 
     override fun onSignInPressed() {
         auth()
+    }
+
+    override fun onExitPressed() {
+        mainActivity.onBackPressed()
+    }
+
+    override fun onPlusButtonPressed() {
+        Log.i("onButtonPressed", "presenter")
+        PlaylistCreateFragment.playlists = PlaylistListFragment.playlists
+        mainActivity.replaceRootFragmentByFragmentBackStack(
+            PlaylistCreateFragment()
+                .apply {
+                    setListener(this@MainActivityPresenter)
+                },
+            null
+        )
+    }
+
+    override fun onItemClicked(playlistName: String) {
+        // TODO get playlist
+
+        mainActivity.replaceRootFragmentByFragmentBackStack(
+            TrackListFragment(playlistName),
+            null
+        )
     }
 }

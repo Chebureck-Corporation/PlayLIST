@@ -19,12 +19,15 @@ class TrackAdapter(
         val view: View = inflater.inflate(R.layout.track, parent, false)
         val holder = TrackViewHolder(view)
         return holder.listen { pos ->
-            val item = tracks[pos]
+            tracks[pos]
         }
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(tracks[position].author, tracks[position].name);
+        holder.bind(
+            tracks[position].author,
+            tracks[position].name
+        )
     }
 
     override fun getItemCount(): Int {

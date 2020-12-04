@@ -17,7 +17,8 @@ class SpotifyAuthManager(private val activityContext: Activity, private val clie
         val request = builder.build()
 
         AuthenticationClient.openLoginActivity(
-            activityContext, REQUEST_CODE,
+            activityContext,
+            REQUEST_CODE,
             request
         )
     }
