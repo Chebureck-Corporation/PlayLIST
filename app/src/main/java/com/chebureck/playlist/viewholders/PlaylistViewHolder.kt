@@ -7,14 +7,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 
-
 class PlaylistViewHolder(
     itemView: View,
     iListener: IListener
 ) : RecyclerView.ViewHolder(itemView) {
     private val context: Context = itemView.context.applicationContext
 
-    interface IListener{
+    interface IListener {
         fun onItemClicked(position: Int)
     }
 
@@ -26,7 +25,7 @@ class PlaylistViewHolder(
 
         val listener = iListener
 
-        itemView.setOnClickListener{
+        itemView.setOnClickListener {
             listener.onItemClicked(adapterPosition)
         }
     }

@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.EditText
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,14 +26,16 @@ class PlaylistListFragment private constructor() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_playlists, container, false
+            R.layout.fragment_playlists,
+            container,
+            false
         )
     }
 
     interface PlayListListener {
         fun onExitPressed()
-        fun onButtonPressed(state: State)
-        fun onItemClicked(id: String)
+        fun onPlaylistButtonPressed(state: State)
+        fun onItemClicked(playlistName: String)
     }
 
     private var listener: PlayListListener? = null
@@ -52,8 +54,11 @@ class PlaylistListFragment private constructor() : Fragment() {
         val xorButton: Button = view.findViewById(R.id.btn_xor)
 
         val recycler: RecyclerView =
-            view.findViewById(R.id.recycler)
-        val adapter = PlaylistAdapter(playlists,
+            view.findViewById(
+                R.id.recycler
+            )
+        val adapter = PlaylistAdapter(
+            playlists,
             ItemClickHandler()
         )
 
@@ -74,7 +79,7 @@ class PlaylistListFragment private constructor() : Fragment() {
                     )
                 plusButton.startAnimation(animation)
                 plusButton.setOnClickListener {
-                    listener?.onButtonPressed(State.CREATING)
+                    listener?.onPlaylistButtonPressed(State.CREATING)
                 }
             }
             State.CREATING.name -> {
@@ -90,9 +95,17 @@ class PlaylistListFragment private constructor() : Fragment() {
         )
     }
 
+    inner class ItemClickHandler : PlaylistViewHolder.IListener {
+        override fun onItemClicked(position: Int) {
+            val string = playlists[position].name
+            Log.i("onItemClicked", string)
+            listener?.onItemClicked(string)
+        }
+    }
+
     companion object {
         var playlists: List<Playlist> = listOf()
-        val KEY_STRING: String = "state"
+        const val KEY_STRING: String = "state"
 
         operator fun invoke(state: State): PlaylistListFragment {
             val fragment = PlaylistListFragment()
@@ -104,14 +117,6 @@ class PlaylistListFragment private constructor() : Fragment() {
 
         enum class State {
             VIEWING, CREATING
-        }
-    }
-
-    inner class ItemClickHandler : PlaylistViewHolder.IListener {
-        override fun onItemClicked(position: Int) {
-            val string = playlists[position].name
-            Log.i("onItemClicked", string)
-            listener?.onItemClicked(string)
         }
     }
 }

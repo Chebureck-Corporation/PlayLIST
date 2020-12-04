@@ -28,9 +28,12 @@ class MainActivityPresenter(
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun onCreate() {
-        mainActivity.replaceRootFragmentByFragment(AuthFragment().apply {
-            setListener(this@MainActivityPresenter)
-        })
+        mainActivity.replaceRootFragmentByFragment(
+            AuthFragment()
+                .apply {
+                    setListener(this@MainActivityPresenter)
+                }
+        )
     }
 
     private fun auth() {
@@ -62,7 +65,7 @@ class MainActivityPresenter(
             val id = spotifyApiManager?.getMe()?.id ?: ""
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
-                onButtonPressed(PlaylistListFragment.Companion.State.VIEWING)
+                onPlaylistButtonPressed(PlaylistListFragment.Companion.State.VIEWING)
             }
         }
     }
@@ -79,7 +82,7 @@ class MainActivityPresenter(
         mainActivity.onBackPressed()
     }
 
-    override fun onButtonPressed(
+    override fun onPlaylistButtonPressed(
         state: PlaylistListFragment.Companion.State
     ) {
         Log.i("onButtonPressed", "presenter")
@@ -93,7 +96,8 @@ class MainActivityPresenter(
     }
 
     override fun onItemClicked(playlistName: String) {
-        //TODO get playlist
+        // TODO get playlist
+
         mainActivity.replaceRootFragmentByFragmentBackStack(
             TrackListFragment(playlistName),
             null
