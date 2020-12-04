@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+
+    <EditText
+            android:id="@+id/et_header"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/playlist_name"
+            android:textSize="27sp"
+            android:textColor="@color/black"
+
+            android:singleLine="true"
+
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="20dp"
+            android:autofillHints="true"
+            android:inputType="textPersonName" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/et_header"
+            android:layout_above="@id/btn_or"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+    <!-- TODO learn how to eliminate this warning problem -->
+    <Button
+            android:id="@+id/btn_and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:maxWidth="300dp"
+
+            android:background="@drawable/button"
+            android:text="@string/and"
+            android:textSize="25sp"
+
+            android:layout_toStartOf="@id/btn_or"
+            android:layout_alignTop="@id/btn_or"
+            android:layout_marginEnd="20dp"/>
+
+    <Button
+            android:id="@+id/btn_or"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/button"
+            android:text="@string/or"
+            android:textSize="25sp"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginBottom="30dp" />
+
+    <Button
+            android:id="@+id/btn_xor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/button"
+            android:text="@string/xor"
+            android:textSize="25sp"
+
+            android:layout_toEndOf="@id/btn_or"
+            android:layout_alignTop="@id/btn_or"
+            android:layout_marginStart="20dp" />
+
+
+</RelativeLayout>
