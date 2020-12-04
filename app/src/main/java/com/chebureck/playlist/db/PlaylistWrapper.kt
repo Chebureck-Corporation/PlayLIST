@@ -12,4 +12,6 @@ data class PlaylistWrapper(
 
     override val id: String
         get() = playlistEntity.id
+    override val imageUrl: String?
+        get() = null
 }

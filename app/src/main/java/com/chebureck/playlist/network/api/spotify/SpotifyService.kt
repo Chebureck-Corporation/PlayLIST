@@ -25,9 +25,18 @@ class TPlaylistWrapper {
     lateinit var items: List<PlaylistWrapper>
 }
 
-class PlaylistWrapper : Playlist {
+class PlaylistWrapper(
     @SerializedName("name")
-    override lateinit var name: String
+    override var name: String,
     @SerializedName("id")
-    override lateinit var id: String
+    override var id: String,
+    @SerializedName("images")
+    private var images: List<Image>?
+) : Playlist {
+    override val imageUrl: String?
+        get() = images?.let { it[0].url }
 }
+
+data class Image(
+    val url: String
+)

@@ -24,7 +24,7 @@ class PlaylistAdapter(
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        holder.bind(playlists[position].name)
+        holder.bind(playlists[position].name, playlists[position].imageUrl)
     }
 
     override fun getItemCount(): Int {
