@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.chebureck.playlist.fragments.AuthFragment
+import com.chebureck.playlist.fragments.PlaylistCreateFragment
 import com.chebureck.playlist.fragments.PlaylistListFragment
 import com.chebureck.playlist.fragments.TrackListFragment
 import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class MainActivityPresenter(
     private val mainActivity: MainActivity
-) : AuthFragment.AuthListener, PlaylistListFragment.PlayListListener {
+) : AuthFragment.AuthListener, PlaylistListFragment.PlayListListener, PlaylistCreateFragment.PlaylistCreateListener {
     private var spotifyApiManager: SpotifyApiManager? = null
     private val spotifyAuthManager = SpotifyAuthManager(
         mainActivity as Activity,
@@ -65,7 +66,13 @@ class MainActivityPresenter(
             val id = spotifyApiManager?.getMe()?.id ?: ""
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
-                onPlaylistButtonPressed(PlaylistListFragment.Companion.State.VIEWING)
+                mainActivity.replaceRootFragmentByFragmentBackStack(
+                    PlaylistListFragment()
+                        .apply {
+                            setListener(this@MainActivityPresenter)
+                        },
+                    null
+                )
             }
         }
     }
@@ -82,12 +89,11 @@ class MainActivityPresenter(
         mainActivity.onBackPressed()
     }
 
-    override fun onPlaylistButtonPressed(
-        state: PlaylistListFragment.Companion.State
-    ) {
+    override fun onPlusButtonPressed() {
         Log.i("onButtonPressed", "presenter")
+        PlaylistCreateFragment.playlists = PlaylistListFragment.playlists
         mainActivity.replaceRootFragmentByFragmentBackStack(
-            PlaylistListFragment(state)
+            PlaylistCreateFragment()
                 .apply {
                     setListener(this@MainActivityPresenter)
                 },
