@@ -17,7 +17,7 @@ import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistListFragment() : Fragment() {
+class PlaylistListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

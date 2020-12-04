@@ -13,7 +13,7 @@ import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistCreateFragment() : Fragment() {
+class PlaylistCreateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
