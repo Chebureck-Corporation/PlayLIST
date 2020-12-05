@@ -11,13 +11,11 @@ class PlaylistApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        synchronized(this) {
-            playlistDatabase = Room.databaseBuilder(
-                applicationContext,
-                PlaylistDatabase::class.java,
-                PlaylistDatabase.DATABASE_NAME
-            ).build()
-            playlistDao = PlaylistDaoImpl(playlistDatabase.playlistDao()!!)
-        }
+        playlistDatabase = Room.databaseBuilder(
+            applicationContext,
+            PlaylistDatabase::class.java,
+            PlaylistDatabase.DATABASE_NAME
+        ).build()
+        playlistDao = PlaylistDaoImpl(playlistDatabase.playlistDao()!!)
     }
 }
