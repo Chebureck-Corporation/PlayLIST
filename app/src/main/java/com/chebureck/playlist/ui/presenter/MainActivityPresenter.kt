@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 
 class MainActivityPresenter(
     private val mainActivity: MainActivity
-) : AuthFragment.AuthListener, PlaylistListFragment.PlayListListener, PlaylistCreateFragment.PlaylistCreateListener {
+) : AuthFragment.AuthListener,
+    PlaylistListFragment.PlayListListener,
+    PlaylistCreateFragment.PlaylistCreateListener {
     private var spotifyApiManager: SpotifyApiManager? = null
     private val spotifyAuthManager = SpotifyAuthManager(
         mainActivity as Activity,
@@ -31,9 +33,6 @@ class MainActivityPresenter(
     fun onCreate() {
         mainActivity.replaceRootFragmentByFragment(
             AuthFragment()
-                .apply {
-                    setListener(this@MainActivityPresenter)
-                }
         )
     }
 
@@ -67,10 +66,7 @@ class MainActivityPresenter(
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
                 mainActivity.replaceRootFragmentByFragmentBackStack(
-                    PlaylistListFragment()
-                        .apply {
-                            setListener(this@MainActivityPresenter)
-                        },
+                    PlaylistListFragment(),
                     null
                 )
             }
@@ -93,10 +89,7 @@ class MainActivityPresenter(
         Log.i("onButtonPressed", "presenter")
         PlaylistCreateFragment.playlists = PlaylistListFragment.playlists
         mainActivity.replaceRootFragmentByFragmentBackStack(
-            PlaylistCreateFragment()
-                .apply {
-                    setListener(this@MainActivityPresenter)
-                },
+            PlaylistCreateFragment(),
             null
         )
     }

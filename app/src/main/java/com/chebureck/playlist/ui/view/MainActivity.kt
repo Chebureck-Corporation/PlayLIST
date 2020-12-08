@@ -34,4 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         presenter.onActivityResult(requestCode, resultCode, data)
     }
+
+    fun <L> findListener(): L {
+        return presenter as L
+    }
 }

@@ -1,5 +1,6 @@
 package com.chebureck.playlist.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,15 +8,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.chebureck.playlist.R
+import com.chebureck.playlist.ui.view.MainActivity
 
-class AuthFragment : Fragment() {
+class AuthFragment() : Fragment() {
     interface AuthListener {
         fun onSignInPressed()
     }
 
     private var listener: AuthListener? = null
-    fun setListener(listener: AuthListener?) {
-        this.listener = listener
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = (requireActivity() as MainActivity).findListener()
     }
 
     override fun onCreateView(
@@ -36,5 +39,10 @@ class AuthFragment : Fragment() {
         authButton.setOnClickListener {
             listener?.onSignInPressed()
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 }

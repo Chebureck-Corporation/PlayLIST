@@ -1,5 +1,6 @@
 package com.chebureck.playlist.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
+import com.chebureck.playlist.ui.view.MainActivity
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistCreateFragment : Fragment() {
+class PlaylistCreateFragment() : Fragment() {
+    interface PlaylistCreateListener {
+        fun onItemClicked(playlistName: String)
+    }
+
+    private var listener: PlaylistCreateListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = (requireActivity() as MainActivity).findListener()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,15 +37,6 @@ class PlaylistCreateFragment : Fragment() {
             container,
             false
         )
-    }
-
-    interface PlaylistCreateListener {
-        fun onItemClicked(playlistName: String)
-    }
-
-    private var listener: PlaylistCreateListener? = null
-    fun setListener(listener: PlaylistCreateListener?) {
-        this.listener = listener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +56,11 @@ class PlaylistCreateFragment : Fragment() {
             requireContext(),
             resources.getInteger(R.integer.columns)
         )
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 
     inner class ItemClickHandler : PlaylistViewHolder.IListener {
