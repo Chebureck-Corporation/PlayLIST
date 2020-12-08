@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.adapters.PlaylistAdapter
 import com.chebureck.playlist.db.Playlist
-import com.chebureck.playlist.ui.presenter.MainActivityPresenter
+import com.chebureck.playlist.ui.view.MainActivity
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistCreateFragment(private val activityPresenter: MainActivityPresenter) : Fragment() {
+class PlaylistCreateFragment() : Fragment() {
     interface PlaylistCreateListener {
         fun onItemClicked(playlistName: String)
     }
@@ -24,7 +24,7 @@ class PlaylistCreateFragment(private val activityPresenter: MainActivityPresente
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = activityPresenter
+        listener = (requireActivity() as MainActivity).findListener()
     }
 
     override fun onCreateView(

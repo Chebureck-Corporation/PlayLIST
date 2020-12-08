@@ -32,7 +32,7 @@ class MainActivityPresenter(
 
     fun onCreate() {
         mainActivity.replaceRootFragmentByFragment(
-            AuthFragment(this@MainActivityPresenter)
+            AuthFragment()
         )
     }
 
@@ -66,7 +66,7 @@ class MainActivityPresenter(
             PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
                 mainActivity.replaceRootFragmentByFragmentBackStack(
-                    PlaylistListFragment(this@MainActivityPresenter),
+                    PlaylistListFragment(),
                     null
                 )
             }
@@ -89,7 +89,7 @@ class MainActivityPresenter(
         Log.i("onButtonPressed", "presenter")
         PlaylistCreateFragment.playlists = PlaylistListFragment.playlists
         mainActivity.replaceRootFragmentByFragmentBackStack(
-            PlaylistCreateFragment(this@MainActivityPresenter),
+            PlaylistCreateFragment(),
             null
         )
     }

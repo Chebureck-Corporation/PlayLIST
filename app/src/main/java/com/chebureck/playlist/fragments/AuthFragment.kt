@@ -8,18 +8,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.chebureck.playlist.R
-import com.chebureck.playlist.ui.presenter.MainActivityPresenter
+import com.chebureck.playlist.ui.view.MainActivity
 
-class AuthFragment(private val activityPresenter: MainActivityPresenter) : Fragment() {
+class AuthFragment() : Fragment() {
     interface AuthListener {
         fun onSignInPressed()
     }
 
     private var listener: AuthListener? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = activityPresenter
+        listener = (requireActivity() as MainActivity).findListener()
     }
 
     override fun onCreateView(
