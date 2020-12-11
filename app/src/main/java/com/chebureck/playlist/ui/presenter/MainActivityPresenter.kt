@@ -32,10 +32,15 @@ class MainActivityPresenter(
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun onCreate() {
-        mainActivity.replaceRootFragmentByFragment(
-            AuthFragment()
-        )
+        if (mustInsertAuthFragment()) {
+            mainActivity.replaceRootFragmentByFragment(
+                AuthFragment()
+            )
+        }
     }
+
+    private fun mustInsertAuthFragment() =
+        !mainActivity.containAnyFragment()
 
     private fun auth() {
         spotifyAuthManager.auth()

@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         presenter.onCreate()
     }
 
+    fun containAnyFragment() = supportFragmentManager.backStackEntryCount != 0
+
     fun replaceRootFragmentByFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.root_fragment, fragment)
