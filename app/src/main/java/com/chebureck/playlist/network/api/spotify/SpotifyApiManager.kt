@@ -22,8 +22,12 @@ class SpotifyApiManager(
     }
 
     fun getPlaylists(userId: String): List<Playlist>? {
-        return spotifyService.playlists(token, userId)
+        val apiPlaylists = spotifyService.playlists(token, userId)
             .execute()
             .body()?.items
+
+        return apiPlaylists?.let { playlist ->
+            playlist.map { Playlist(it.name, it.imageUrl, it.id) }
+        }
     }
 }

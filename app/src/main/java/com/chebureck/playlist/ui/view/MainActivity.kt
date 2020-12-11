@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         presenter.onActivityResult(requestCode, resultCode, data)
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <L> findListener(): L {
         return presenter as L
     }
