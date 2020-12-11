@@ -8,12 +8,11 @@ import com.chebureck.playlist.R
 import com.chebureck.playlist.ui.presenter.MainActivityPresenter
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var presenter: MainActivityPresenter
+    private val presenter = MainActivityPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainActivityPresenter(this)
         presenter.onCreate()
     }
 

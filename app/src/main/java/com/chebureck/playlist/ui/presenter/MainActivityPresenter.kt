@@ -3,6 +3,7 @@ package com.chebureck.playlist.ui.presenter
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.fragments.AuthFragment
 import com.chebureck.playlist.fragments.PlaylistCreateFragment
 import com.chebureck.playlist.fragments.PlaylistListFragment
@@ -63,18 +64,14 @@ class MainActivityPresenter(
     private fun onSuccessfulAuth() {
         ioScope.launch {
             val id = spotifyApiManager?.getMe()?.id ?: ""
-            PlaylistListFragment.playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
+            val playlists = spotifyApiManager?.getPlaylists(id) ?: listOf()
             launch(Dispatchers.Main.immediate) {
                 mainActivity.replaceRootFragmentByFragmentBackStack(
-                    PlaylistListFragment(),
+                    PlaylistListFragment.createInstance(playlists),
                     null
                 )
             }
         }
-    }
-
-    companion object {
-        const val SPOTIFY_CLIENT_ID = "d38b258e60eb46ae9b2b03cde1fd8329"
     }
 
     override fun onSignInPressed() {
@@ -85,11 +82,10 @@ class MainActivityPresenter(
         mainActivity.onBackPressed()
     }
 
-    override fun onPlusButtonPressed() {
+    override fun onPlusButtonPressed(playlists: List<Playlist>) {
         Log.i("onButtonPressed", "presenter")
-        PlaylistCreateFragment.playlists = PlaylistListFragment.playlists
         mainActivity.replaceRootFragmentByFragmentBackStack(
-            PlaylistCreateFragment(),
+            PlaylistCreateFragment.createInstance(playlists),
             null
         )
     }
@@ -101,5 +97,9 @@ class MainActivityPresenter(
             TrackListFragment(playlistName),
             null
         )
+    }
+
+    companion object {
+        const val SPOTIFY_CLIENT_ID = "d38b258e60eb46ae9b2b03cde1fd8329"
     }
 }
