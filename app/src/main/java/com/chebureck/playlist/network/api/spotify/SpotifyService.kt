@@ -1,6 +1,5 @@
 package com.chebureck.playlist.network.api.spotify
 
-import com.chebureck.playlist.db.Playlist
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
@@ -21,19 +20,18 @@ interface SpotifyService {
 }
 
 class TPlaylistWrapper {
-    lateinit var href: String
-    lateinit var items: List<PlaylistWrapper>
+    lateinit var items: List<SpotifyAPIPlaylist>
 }
 
-class PlaylistWrapper(
+class SpotifyAPIPlaylist(
     @SerializedName("name")
-    override var name: String,
+    var name: String,
     @SerializedName("id")
-    override var id: String,
+    var id: String,
     @SerializedName("images")
     private var images: List<Image>?
-) : Playlist {
-    override val imageUrl: String?
+) {
+    val imageUrl: String?
         get() = images?.let { it[0].url }
 }
 

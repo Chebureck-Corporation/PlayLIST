@@ -21,6 +21,7 @@ const val TRACK_ID_FIELD: String = "track_id"
 @Entity(tableName = PLAYLIST_ENTITY)
 data class PlaylistEntity(
     @PrimaryKey val id: String,
+    var imageUrl: String?,
     var name: String
 )
 
