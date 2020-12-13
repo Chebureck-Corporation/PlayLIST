@@ -15,12 +15,21 @@ import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.ui.view.MainActivity
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistCreateFragment() : Fragment() {
+class PlaylistCreateFragment : Fragment() {
+    private var playlists: List<Playlist> = listOf()
+
     interface PlaylistCreateListener {
         fun onItemClicked(playlistName: String)
     }
 
     private var listener: PlaylistCreateListener? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        playlists = arguments?.getParcelableArray(PLAYLISTS_ARGUMENT_ID)?.map {
+            it as Playlist
+        } ?: listOf()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -72,6 +81,13 @@ class PlaylistCreateFragment() : Fragment() {
     }
 
     companion object {
-        var playlists: List<Playlist> = listOf()
+        private const val PLAYLISTS_ARGUMENT_ID = "PLAYLISTS_ARGUMENT_ID"
+
+        fun createInstance(playlists: List<Playlist>) =
+            PlaylistCreateFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelableArray(PLAYLISTS_ARGUMENT_ID, playlists.toTypedArray())
+                }
+            }
     }
 }

@@ -7,97 +7,78 @@ import androidx.lifecycle.MutableLiveData
 class PlaylistDaoImpl(
     private val playlistDao: PlaylistDao
 ) {
-    lateinit var playlistList: MutableLiveData<MutableList<PlaylistWrapper>>
-
-    lateinit var trackList: MutableLiveData<MutableList<TrackWrapper>>
-
-    fun getTrackById(id: String): TrackWrapper {
+    fun getTrackById(id: String): Track {
         val trackEntity = playlistDao.getTrackById(id)
-        return TrackWrapper(trackEntity)
+        return getTrackFromEntity(trackEntity)
     }
 
     fun getTracksByPlaylist(
         lifecycleOwner: LifecycleOwner,
         playlistId: String
-    ): LiveData<List<TrackWrapper>> {
+    ): LiveData<List<Track>> {
         val tracksOfPlaylist = playlistDao.getTracksOfPlaylist(playlistId)
-        val p = MutableLiveData<List<TrackWrapper>>()
+        val p = MutableLiveData<List<Track>>()
         tracksOfPlaylist.observe(
             lifecycleOwner,
             { value ->
-                p.value = value.map { TrackWrapper(it) }
+                p.value = value.map { getTrackFromEntity(it) }
             }
         )
         return p
     }
 
-    fun getPlaylists(lifecycleOwner: LifecycleOwner): LiveData<List<PlaylistWrapper>> {
+    fun getPlaylists(lifecycleOwner: LifecycleOwner): LiveData<List<Playlist>> {
         val playlists = playlistDao.getPlaylists()
-        val p = MutableLiveData<List<PlaylistWrapper>>()
+        val p = MutableLiveData<List<Playlist>>()
         playlists.observe(
             lifecycleOwner,
             { value ->
-                p.value = value.map { PlaylistWrapper(it) }
+                p.value = value.map { getPlaylistFromEntity(it) }
             }
         )
         return p
     }
 
-    fun getPlaylistById(playlistId: String): PlaylistWrapper {
-        val playlist = playlistDao.getPlaylistById(playlistId)
-        return PlaylistWrapper(playlist)
+    fun getPlaylistById(playlistId: String): Playlist {
+        val playlistEntity = playlistDao.getPlaylistById(playlistId)
+        return getPlaylistFromEntity(playlistEntity)
     }
 
-    fun addPlaylist(playlistEntity: PlaylistEntity) {
-        playlistDao.addPlaylist(playlistEntity)
-        playlistList.value?.add(PlaylistWrapper(playlistEntity))
+    fun addPlaylist(playlist: Playlist) {
+        playlistDao.addPlaylist(playlistToEntity(playlist))
     }
 
-    fun addTrack(trackEntity: TrackEntity) {
-        playlistDao.addTrack(trackEntity)
-        trackList.value?.add(TrackWrapper(trackEntity))
+    fun addTrack(track: Track) {
+        playlistDao.addTrack(trackToEntity(track))
     }
 
-    fun updatePlaylist(playlistEntity: PlaylistEntity) {
-        playlistDao.updatePlaylist(playlistEntity)
+    fun updatePlaylist(playlist: Playlist) {
+        playlistDao.updatePlaylist(playlistToEntity(playlist))
     }
 
-    fun deleteTrack(trackEntity: TrackEntity) {
-        playlistDao.deleteTrack(trackEntity)
-        val index = trackList.value?.indexOfFirst {
-            it.id == trackEntity.id
-        }
-        if (index != null) {
-            trackList.value?.removeAt(index)
-        }
+    fun deleteTrack(track: Track) {
+        playlistDao.deleteTrack(trackToEntity(track))
     }
 
-    fun deletePlaylist(playlistEntity: PlaylistEntity) {
-        playlistDao.deletePlaylist(playlistEntity)
-        val index: Int? = playlistList.value?.indexOfFirst {
-            it.id == playlistEntity.id
-        }
-        if (index != null) {
-            playlistList.value?.removeAt(index)
-        }
+    fun deletePlaylist(playlistEntity: Playlist) {
+        playlistDao.deletePlaylist(playlistToEntity(playlistEntity))
     }
 
     fun trackToPlaylist(playlistId: String, trackId: String) {
         playlistDao.trackToPlaylist(playlistId, trackId)
-        findTrackById(trackId)?.let { findPlaylistById(playlistId)?.tracks?.value?.add(it) }
     }
 
-    private fun findTrackById(trackId: String): TrackWrapper? {
-        val index: Int? = trackList.value?.indexOfFirst {
-            it.id == trackId
-        }
-        return index?.let { trackList.value?.get(it) }
-    }
+    private companion object {
+        fun getTrackFromEntity(trackEntity: TrackEntity) =
+            Track(trackEntity.name, trackEntity.author, trackEntity.id)
 
-    private fun findPlaylistById(playlistId: String): PlaylistWrapper? {
-        val index: Int? = playlistList.value?.indexOfFirst {
-            it.id == playlistId
-        }
-        return index?.let { playlistList.value?.get(it) }
+        fun getPlaylistFromEntity(playlistEntity: PlaylistEntity) =
+            Playlist(playlistEntity.name, playlistEntity.imageUrl, playlistEntity.id)
+
+        fun trackToEntity(track: Track) =
+            TrackEntity(track.name, track.author, track.id)
+
+        fun playlistToEntity(playlist: Playlist) =
+            PlaylistEntity(playlist.id, playlist.imageUrl, playlist.name)
     }
 }

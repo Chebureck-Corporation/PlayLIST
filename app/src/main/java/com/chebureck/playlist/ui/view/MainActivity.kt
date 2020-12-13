@@ -8,14 +8,15 @@ import com.chebureck.playlist.R
 import com.chebureck.playlist.ui.presenter.MainActivityPresenter
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var presenter: MainActivityPresenter
+    private val presenter = MainActivityPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainActivityPresenter(this)
         presenter.onCreate()
     }
+
+    fun containAnyFragment() = supportFragmentManager.backStackEntryCount != 0
 
     fun replaceRootFragmentByFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         presenter.onActivityResult(requestCode, resultCode, data)
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <L> findListener(): L {
         return presenter as L
     }

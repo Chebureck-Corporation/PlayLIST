@@ -19,14 +19,23 @@ import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.ui.view.MainActivity
 import com.chebureck.playlist.viewholders.PlaylistViewHolder
 
-class PlaylistListFragment() : Fragment() {
+class PlaylistListFragment : Fragment() {
+    var playlists: List<Playlist> = listOf()
+
     interface PlayListListener {
         fun onExitPressed()
-        fun onPlusButtonPressed()
+        fun onPlusButtonPressed(playlists: List<Playlist>)
         fun onItemClicked(playlistName: String)
     }
 
     private var listener: PlayListListener? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        playlists = arguments?.getParcelableArray(PLAYLISTS_ARGUMENT_ID)?.map {
+            it as Playlist
+        } ?: listOf()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,7 +80,7 @@ class PlaylistListFragment() : Fragment() {
             )
         plusButton.startAnimation(animation)
         plusButton.setOnClickListener {
-            listener?.onPlusButtonPressed()
+            listener?.onPlusButtonPressed(playlists)
         }
         recycler.adapter = adapter
         recycler.layoutManager = GridLayoutManager(
@@ -94,6 +103,13 @@ class PlaylistListFragment() : Fragment() {
     }
 
     companion object {
-        var playlists: List<Playlist> = listOf()
+        private const val PLAYLISTS_ARGUMENT_ID = "PLAYLISTS_ARGUMENT_ID"
+
+        fun createInstance(playlists: List<Playlist>) =
+            PlaylistListFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelableArray(PLAYLISTS_ARGUMENT_ID, playlists.toTypedArray())
+                }
+            }
     }
 }

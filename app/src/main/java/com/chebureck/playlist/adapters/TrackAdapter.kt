@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
-import com.chebureck.playlist.db.TrackWrapper
+import com.chebureck.playlist.db.Track
 import com.chebureck.playlist.viewholders.TrackViewHolder
 
 class TrackAdapter(
-    trackList: List<TrackWrapper>
+    trackList: List<Track>
 ) : RecyclerView.Adapter<TrackViewHolder>() {
-    private var tracks: List<TrackWrapper> = trackList
+    private var tracks: List<Track> = trackList
 
     override fun onCreateViewHolder(@NonNull parent: ViewGroup, viewType: Int): TrackViewHolder {
         val inflater = LayoutInflater.from(parent.context)
