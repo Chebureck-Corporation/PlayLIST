@@ -1,16 +1,16 @@
 package com.chebureck.playlist.operations
 
+import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.db.PlaylistEntity
-import com.chebureck.playlist.db.PlaylistWrapper
-import com.chebureck.playlist.db.TrackWrapper
+import com.chebureck.playlist.db.Track
 
 class Operations {
-    fun And(playlists: List<PlaylistWrapper>, id: Int, name: String): PlaylistWrapper{
-        var newTracks: MutableList<TrackWrapper>? = playlists[0].tracks.value
+    fun And(tracksList: List<MutableList<Track>?>): MutableList<Track>?{
+        var newTracks: MutableList<Track>? = tracksList[0]
         if (newTracks != null)
-            for (i in 1..playlists.size){
-                val curTracks: MutableList<TrackWrapper>? = newTracks
-                val tempTracks: MutableList<TrackWrapper>? = playlists[i].tracks.value
+            for (i in 1..tracksList.size){
+                val curTracks: MutableList<Track>? = newTracks
+                val tempTracks: MutableList<Track>? = tracksList[i]
                 newTracks = mutableListOf()
                 if (curTracks != null && tempTracks != null) {
                     for (j in 0..curTracks.size){
@@ -19,16 +19,14 @@ class Operations {
                     }
                 }
             }
-        val result = PlaylistWrapper(PlaylistEntity((id - 1).toString(), name))
-        result.tracks.value = newTracks
-        return result
+        return newTracks
     }
 
-    fun Or(playlists: List<PlaylistWrapper>, id: Int, name: String): PlaylistWrapper{
-        val newTracks: MutableList<TrackWrapper>? = playlists[0].tracks.value
+    fun Or(tracksList: List<MutableList<Track>?>): MutableList<Track>?{
+        val newTracks: MutableList<Track>? = tracksList[0]
         if (newTracks != null)
-            for (i in 1..playlists.size){
-                val tempTracks: MutableList<TrackWrapper>? = playlists[i].tracks.value
+            for (i in 1..tracksList.size){
+                val tempTracks: MutableList<Track>? = tracksList[i]
                 if (tempTracks != null) {
                     for (j in 0..tempTracks.size){
                         if (tempTracks[j] !in newTracks)
@@ -36,18 +34,16 @@ class Operations {
                     }
                 }
             }
-        val result = PlaylistWrapper(PlaylistEntity((id - 1).toString(), name))
-        result.tracks.value = newTracks
-        return result
+        return newTracks
     }
 
-    fun Xor(playlists: List<PlaylistWrapper>, id: Int, name: String): PlaylistWrapper{
-        var newTracks: MutableList<TrackWrapper>? = playlists[0].tracks.value
+    fun Xor(tracksList: List<MutableList<Track>?>): MutableList<Track>?{
+        var newTracks: MutableList<Track>? = tracksList[0]
         if (newTracks != null)
-            for (i in 1..playlists.size){
-                val curTracks: MutableList<TrackWrapper>? = newTracks
-                val tempTracks: MutableList<TrackWrapper>? = playlists[i].tracks.value
-                val orTracks: MutableList<TrackWrapper> = mutableListOf()
+            for (i in 1..tracksList.size){
+                val curTracks: MutableList<Track>? = newTracks
+                val tempTracks: MutableList<Track>? = tracksList[i]
+                val orTracks: MutableList<Track> = mutableListOf()
                 newTracks = mutableListOf()
                 if (curTracks != null && tempTracks != null) {
                     for (j in 0..tempTracks.size){
@@ -60,8 +56,6 @@ class Operations {
                     }
                 }
             }
-        val result = PlaylistWrapper(PlaylistEntity((id - 1).toString(), name))
-        result.tracks.value = newTracks
-        return result
+        return newTracks
     }
 }
