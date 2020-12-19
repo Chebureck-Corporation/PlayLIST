@@ -2,32 +2,41 @@ package com.chebureck.playlist.db
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class Playlist (
-    val name: String,
-    val imageUrl: String?,
-    val id: String
+@Entity
+data class Playlist(
+    @PrimaryKey
+    val playlistId: String,
+    var imageUrl: String?,
+    var name: String
 ) : Parcelable {
-    override fun describeContents() = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(name)
-        dest.writeString(imageUrl)
-        dest.writeString(id)
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString(),
+        parcel.readString()!!
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(playlistId)
+        parcel.writeString(imageUrl)
+        parcel.writeString(name)
     }
 
-    companion object {
-        val CREATOR = object : Parcelable.Creator<Playlist> {
-            override fun createFromParcel(source: Parcel): Playlist {
-                val name = source.readString()
-                val imageUrl = source.readString()
-                val id = source.readString()
-                return Playlist(name!!, imageUrl, id!!)
-            }
+    override fun describeContents(): Int {
+        return 0
+    }
 
-            override fun newArray(size: Int): Array<Playlist?> {
-                return Array(size) { Playlist("", "", "") }
-            }
+    companion object CREATOR : Parcelable.Creator<Playlist> {
+        override fun createFromParcel(parcel: Parcel): Playlist {
+            return Playlist(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Playlist?> {
+            return arrayOfNulls(size)
         }
     }
 }

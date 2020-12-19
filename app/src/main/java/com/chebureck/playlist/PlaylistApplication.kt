@@ -1,21 +1,18 @@
 package com.chebureck.playlist
 
 import android.app.Application
-import androidx.room.Room
-import com.chebureck.playlist.db.PlaylistDaoImpl
-import com.chebureck.playlist.db.PlaylistDatabase
+import com.chebureck.playlist.di.databaseModule
+import com.chebureck.playlist.di.spotifyModule
+import com.chebureck.playlist.di.viewModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class PlaylistApplication : Application() {
-    lateinit var playlistDatabase: PlaylistDatabase
-    lateinit var playlistDao: PlaylistDaoImpl
-
     override fun onCreate() {
         super.onCreate()
-        playlistDatabase = Room.databaseBuilder(
-            applicationContext,
-            PlaylistDatabase::class.java,
-            PlaylistDatabase.DATABASE_NAME
-        ).build()
-        playlistDao = PlaylistDaoImpl(playlistDatabase.playlistDao()!!)
+        startKoin {
+            androidContext(this@PlaylistApplication)
+            modules(viewModule, databaseModule, spotifyModule)
+        }
     }
 }

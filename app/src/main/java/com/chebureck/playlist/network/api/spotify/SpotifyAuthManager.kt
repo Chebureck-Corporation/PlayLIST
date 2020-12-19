@@ -1,23 +1,25 @@
 package com.chebureck.playlist.network.api.spotify
 
 import android.app.Activity
-import com.spotify.sdk.android.authentication.AuthenticationClient
-import com.spotify.sdk.android.authentication.AuthenticationRequest
-import com.spotify.sdk.android.authentication.AuthenticationResponse
+import com.spotify.sdk.android.auth.AuthorizationClient
+import com.spotify.sdk.android.auth.AuthorizationRequest
+import com.spotify.sdk.android.auth.AuthorizationResponse
 
-class SpotifyAuthManager(private val activityContext: Activity, private val clientId: String) {
-    fun auth() {
-        val builder = AuthenticationRequest.Builder(
+class SpotifyAuthManager(private val clientId: String) {
+    fun login(activityLoginListener: Activity, showDialog: Boolean) {
+        val builder = AuthorizationRequest.Builder(
             clientId,
-            AuthenticationResponse.Type.TOKEN,
+            AuthorizationResponse.Type.TOKEN,
             REDIRECT_URI
         )
 
-        builder.setScopes(arrayOf("playlist-read-private", "playlist-read-collaborative"))
+        builder.setScopes(arrayOf("playlist-read-private"))
+        builder.setShowDialog(showDialog)
+
         val request = builder.build()
 
-        AuthenticationClient.openLoginActivity(
-            activityContext,
+        AuthorizationClient.openLoginActivity(
+            activityLoginListener,
             REQUEST_CODE,
             request
         )

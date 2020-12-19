@@ -2,33 +2,38 @@ package com.chebureck.playlist.db
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class Track (
+@Entity
+data class Track(
+    @PrimaryKey
+    val trackId: String,
     val name: String,
-    val author: String,
-    val id: String,
+    val author: String
 ) : Parcelable {
-    override fun describeContents() = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(name)
-        dest.writeString(author)
-        dest.writeString(id)
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(trackId)
+        parcel.writeString(name)
+        parcel.writeString(author)
     }
 
-    companion object {
-        val CREATOR = object : Parcelable.Creator<Track> {
-            override fun createFromParcel(source: Parcel): Track {
-                val name = source.readString()
-                val author = source.readString()
-                val id = source.readString()
-                return Track(name!!, author!!, id!!)
-            }
+    override fun describeContents() = 0
 
-            override fun newArray(size: Int): Array<Track> {
-                return Array(size) { Track("", "", "") }
-            }
+    companion object CREATOR : Parcelable.Creator<Track> {
+        override fun createFromParcel(parcel: Parcel): Track {
+            return Track(parcel)
+        }
 
+        override fun newArray(size: Int): Array<Track?> {
+            return arrayOfNulls(size)
         }
     }
 }
