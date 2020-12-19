@@ -10,16 +10,12 @@
             android:roundIcon="@drawable/image_icon"
             android:supportsRtl="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <activity android:name=".ui.view.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-                android:name="com.spotify.sdk.android.authentication.LoginActivity"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
