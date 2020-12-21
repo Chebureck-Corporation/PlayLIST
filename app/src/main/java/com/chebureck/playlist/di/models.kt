@@ -8,6 +8,8 @@ import androidx.room.Room
 import com.chebureck.playlist.db.PlaylistDao
 import com.chebureck.playlist.db.PlaylistDatabase
 import com.chebureck.playlist.db.SpotifyTokenProviderImpl
+import com.chebureck.playlist.mvvm.repository.PlaylistRepository
+import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
 import com.chebureck.playlist.network.api.spotify.SpotifyTokenProvider
@@ -16,9 +18,18 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+val repositoryModule = module {
+    single<PlaylistRepository> {
+        PlaylistRepository(get())
+    }
+}
+
 val viewModule = module {
     viewModel<SpotifyViewModel> {
         SpotifyViewModel(get(), get(), get())
+    }
+    viewModel<PlaylistCreateViewModel> {
+        PlaylistCreateViewModel(get())
     }
 }
 

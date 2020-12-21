@@ -1,7 +1,7 @@
 package com.chebureck.playlist.network.api.spotify
 
-import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.db.Playlist
+import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.db.Track
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,7 +35,12 @@ class SpotifyApiManager(
             .body()?.items
 
         return apiPlaylists?.let { playlist ->
-            playlist.map { PlaylistWithTracks(Playlist(it.id, it.imageUrl, it.name), getTracks(it.tracks.href)) }
+            playlist.map {
+                PlaylistWithTracks(
+                    Playlist(it.id, it.imageUrl, it.name),
+                    getTracks(it.tracks.href)
+                )
+            }
         }
     }
 }

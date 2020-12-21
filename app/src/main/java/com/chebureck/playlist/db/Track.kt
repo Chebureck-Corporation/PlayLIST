@@ -7,25 +7,29 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Track(
-    @PrimaryKey
-    val trackId: String,
+    val spotifyTrackId: String,
     val name: String,
-    val author: String
+    val author: String,
+    @PrimaryKey(autoGenerate = true)
+    val trackId: Long = 0
 ) : Parcelable {
-
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.readLong()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(trackId)
+        parcel.writeString(spotifyTrackId)
         parcel.writeString(name)
         parcel.writeString(author)
+        parcel.writeLong(trackId)
     }
 
-    override fun describeContents() = 0
+    override fun describeContents(): Int {
+        return 0
+    }
 
     companion object CREATOR : Parcelable.Creator<Track> {
         override fun createFromParcel(parcel: Parcel): Track {

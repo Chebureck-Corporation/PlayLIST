@@ -2,28 +2,30 @@ package com.chebureck.playlist.db
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
 data class Playlist(
-    @PrimaryKey
-    val playlistId: String,
+    val spotifyId: String?,
     var imageUrl: String?,
-    var name: String
+    var name: String,
+    @PrimaryKey(autoGenerate = true)
+    val playlistId: Long = 0
 ) : Parcelable {
-
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
         parcel.readString(),
-        parcel.readString()!!
-    )
+        parcel.readString(),
+        parcel.readString()!!,
+        parcel.readLong()
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(playlistId)
+        parcel.writeString(spotifyId)
         parcel.writeString(imageUrl)
         parcel.writeString(name)
+        parcel.writeLong(playlistId)
     }
 
     override fun describeContents(): Int {
