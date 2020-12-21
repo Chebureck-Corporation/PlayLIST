@@ -1,7 +1,7 @@
 package com.chebureck.playlist.network.api.spotify.`object`
 
 data class TracksInfo(
-    var track: TrackInfo
+    var track: TrackInfo?
 )
 
 data class TrackInfo(

@@ -23,10 +23,12 @@ class SpotifyApiManager(
             .body()?.items
             ?: return listOf()
 
-        return apiTracks.map { subTrack ->
-            val track = subTrack.track
-            Track(track.id, track.name, track.artists.joinToString { it.name })
-        }
+        return apiTracks.asSequence()
+            .filter { it.track != null }
+            .map { subTrack ->
+                val track = subTrack.track!!
+                Track(track.id, track.name, track.artists.joinToString { it.name })
+            }.toList()
     }
 
     fun getMyPlaylists(): List<PlaylistWithTracks>? {
