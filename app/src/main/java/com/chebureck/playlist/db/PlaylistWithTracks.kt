@@ -18,6 +18,9 @@ data class PlaylistWithTracks(
     val id
         get() = playlist.playlistId
 
+    val spotifyId
+        get() = playlist.spotifyId
+
     val imageUrl
         get() = playlist.imageUrl
 

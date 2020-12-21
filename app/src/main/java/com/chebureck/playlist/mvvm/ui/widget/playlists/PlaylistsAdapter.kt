@@ -5,17 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
-import com.chebureck.playlist.db.PlaylistWithTracks
+import com.chebureck.playlist.db.Playlist
 
 class PlaylistsAdapter(
     private val listener: PlaylistAdapterClickListener
 ) : RecyclerView.Adapter<PlaylistViewHolder>(), PlaylistViewHolder.PlaylistClickListener {
 
-    interface PlaylistAdapterClickListener {
-        fun onPlaylistClicked(playlist: PlaylistWithTracks)
-    }
+    interface PlaylistAdapterClickListener : PlaylistViewHolder.PlaylistClickListener
 
-    var playlists: List<PlaylistWithTracks> = listOf()
+    var playlists: List<Playlist> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -35,6 +33,10 @@ class PlaylistsAdapter(
     override fun getItemCount() = playlists.size
 
     override fun onPlaylistClicked(position: Int) {
-        listener.onPlaylistClicked(playlists[position])
+        listener.onPlaylistClicked(position)
+    }
+
+    override fun onPlaylistLongClicked(position: Int, selected: Boolean) {
+        listener.onPlaylistLongClicked(position, selected)
     }
 }

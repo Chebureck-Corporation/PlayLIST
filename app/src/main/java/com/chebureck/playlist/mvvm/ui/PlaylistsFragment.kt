@@ -12,14 +12,16 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
-import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.mvvm.ui.widget.playlists.PlaylistsAdapter
+import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
     PlaylistsAdapter.PlaylistAdapterClickListener {
-    private val spotifyViewModel by viewModel<SpotifyViewModel>()
+    private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
+    private val playlistCreateViewModel
+            by sharedViewModel<PlaylistCreateViewModel>()
     private lateinit var navController: NavController
 
     private val playlistsAdapter = PlaylistsAdapter(this)
@@ -37,7 +39,7 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
         }
         spotifyViewModel.getPlaylists().observe(viewLifecycleOwner) {
             if (it != null) {
-                playlistsAdapter.playlists = it
+                playlistsAdapter.playlists = it.map { it.playlist }
             }
         }
     }
@@ -62,13 +64,8 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
         plusButton.setOnClickListener {
             val currentPlaylists = spotifyViewModel.getPlaylists().value
                 ?: return@setOnClickListener
-            val bundle = Bundle().apply {
-                putParcelableArray(
-                    PlaylistCreateFragment.BUNDLE_NAME_PLAYLISTS,
-                    currentPlaylists.toTypedArray()
-                )
-            }
-            navController.navigate(R.id.playlistCreateFragment, bundle)
+            playlistCreateViewModel.initPlaylists(currentPlaylists)
+            navController.navigate(R.id.playlistCreateFragment)
         }
 
         playlists.adapter = playlistsAdapter
@@ -78,11 +75,18 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
         )
     }
 
-    override fun onPlaylistClicked(playlist: PlaylistWithTracks) {
+    override fun onPlaylistLongClicked(position: Int, selected: Boolean) {
+
+    }
+
+    override fun onPlaylistClicked(position: Int) {
+        val playlistWithTracks =
+            spotifyViewModel.getPlaylists().value?.get(position)?.tracks
+                ?: throw Throwable("Unpredicted behavior")
         val bundle = Bundle().apply {
             putParcelableArray(
                 TracksFragment.BUNDLE_NAME_TRACKS,
-                playlist.tracks.toTypedArray()
+                playlistWithTracks.toTypedArray()
             )
         }
         navController.navigate(R.id.tracksFragment, bundle)
