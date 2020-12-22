@@ -1,15 +1,20 @@
 package com.chebureck.playlist.network.api.spotify.`object`
 
 data class TracksInfo(
-    var track: TrackInfo?
+    val track: SpotifyTrack?
 )
 
-data class TrackInfo(
-    var name: String,
-    var id: String,
-    var artists: List<Artist>
+data class SpotifyTrack(
+    val name: String,
+    val id: String,
+    val artists: List<Artist>,
+    val uri: String
 )
 
 data class Artist(
-    var name: String
+    val name: String
+)
+
+data class TrackUris(
+    val uris: List<String>
 )

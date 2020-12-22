@@ -64,6 +64,8 @@ ext {
     coroutines_view_model_version = "2.2.0"
     coroutines_lifecycle_version = "2.2.0"
     coroutines_live_data_version = "2.2.0"
+
+    logging_interceptor = "4.9.0"
 }
 
 dependencies {
@@ -90,6 +92,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:converter-gson:$gson_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
 
     // Spotify
     implementation 'com.spotify.android:auth:1.2.3'

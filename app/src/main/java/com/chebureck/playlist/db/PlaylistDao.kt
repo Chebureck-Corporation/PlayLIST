@@ -1,12 +1,7 @@
 package com.chebureck.playlist.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.room.*
 
 @Dao
 abstract class PlaylistDao {
@@ -27,14 +22,28 @@ abstract class PlaylistDao {
     @Insert
     protected abstract fun insertPlaylistTrackCrossRef(playlistTrackCrossRef: PlaylistTrackCrossRef)
 
-    suspend fun insertPlaylist(playlist: PlaylistWithTracks) {
-        withContext(Dispatchers.IO) {
-            val playlistId = insertPlaylistEntity(playlist.playlist)
-            for (track in playlist.tracks) {
-                val trackId = insertTrackEntity(track)
-                val crossRef = PlaylistTrackCrossRef(playlistId, trackId)
-                insertPlaylistTrackCrossRef(crossRef)
-            }
+    @Delete
+    protected abstract fun deletePlaylist(playlist: Playlist)
+
+    @Delete
+    protected abstract fun deletePlaylistTrackCrossRef(playlistTrackCrossRef: PlaylistTrackCrossRef)
+
+    @Transaction
+    open fun deletePlaylistWithTracks(playlist: PlaylistWithTracks) {
+        deletePlaylist(playlist.playlist)
+        for (track in playlist.tracks) {
+            val crossRef = PlaylistTrackCrossRef(playlist.id, track.trackId)
+            deletePlaylistTrackCrossRef(crossRef)
+        }
+    }
+
+    @Transaction
+    open fun insertPlaylist(playlist: PlaylistWithTracks) {
+        val playlistId = insertPlaylistEntity(playlist.playlist)
+        for (track in playlist.tracks) {
+            val trackId = insertTrackEntity(track)
+            val crossRef = PlaylistTrackCrossRef(playlistId, trackId)
+            insertPlaylistTrackCrossRef(crossRef)
         }
     }
 }

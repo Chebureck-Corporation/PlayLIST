@@ -1,10 +1,10 @@
 package com.chebureck.playlist.network.api.spotify.`object`
 
 class SpotifyApiPlaylist(
-    var name: String,
-    var id: String,
-    private var images: List<Image>?,
-    var tracks: Tracks
+    val name: String,
+    val id: String,
+    private val images: List<Image>?,
+    val tracks: Tracks
 ) {
     val imageUrl: String?
         get() = images?.let { it[0].url }
@@ -16,4 +16,8 @@ data class Image(
 
 data class Tracks(
     val href: String
+)
+
+data class SpotifyApiPlaylistCreate(
+    val name: String
 )
