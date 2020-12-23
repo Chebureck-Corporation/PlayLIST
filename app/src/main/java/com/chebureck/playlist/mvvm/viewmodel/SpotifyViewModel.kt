@@ -4,17 +4,21 @@ import android.app.Activity
 import androidx.lifecycle.*
 import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.mvvm.repository.PlaylistRepository
-import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
 import com.chebureck.playlist.network.api.spotify.SpotifyTokenProvider
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.parameter.parametersOf
 
+@KoinApiExtension
 class SpotifyViewModel(
     private val spotifyAuthManager: SpotifyAuthManager,
     private val tokenProvider: SpotifyTokenProvider,
     private val playlistRepository: PlaylistRepository
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     private val tokenData = MutableLiveData<String?>(token)
     private val playlists = playlistRepository.getPlaylists().map {
         if (!it.spotifyLoadedSuccessfully) {
@@ -62,10 +66,17 @@ class SpotifyViewModel(
         }
     }
 
-    private fun refreshToken(value: String?) {
-        value?.let {
-            playlistRepository.setSpotifyApiManager(SpotifyApiManager(it))
+    // TODO: it must be used to create playlist
+    fun createSpotifyPlaylist(playlist: PlaylistWithTracks) {
+        viewModelScope.launch {
+            playlistRepository.createSpotifyPlaylist(playlist)
         }
-        tokenData.value = value
+    }
+
+    private fun refreshToken(newToken: String?) {
+        newToken?.let {
+            playlistRepository.setSpotifyApiManager(get { parametersOf(newToken) })
+        }
+        tokenData.value = newToken
     }
 }

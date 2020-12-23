@@ -31,7 +31,9 @@ class PlaylistRepository(
     }
 
     suspend fun saveLocalPlaylist(playlist: PlaylistWithTracks) {
-        playlistDao.insertPlaylist(playlist)
+        withContext(Dispatchers.IO) {
+            playlistDao.insertPlaylist(playlist)
+        }
     }
 
     private fun requestSpotifyPlaylists() {
@@ -42,6 +44,13 @@ class PlaylistRepository(
 
     fun setSpotifyApiManager(spotifyApiManager: SpotifyApiManager) {
         this.spotifyApiManager = spotifyApiManager
+    }
+
+    suspend fun createSpotifyPlaylist(playlist: PlaylistWithTracks) {
+        withContext(Dispatchers.IO) {
+            val createdPlaylist = spotifyApiManager?.createPlaylist(playlist)!!
+            playlistDao.deletePlaylistWithTracks(createdPlaylist)
+        }
     }
 }
 

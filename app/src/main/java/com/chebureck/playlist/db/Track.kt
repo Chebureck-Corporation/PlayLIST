@@ -10,10 +10,12 @@ data class Track(
     val spotifyTrackId: String,
     val name: String,
     val author: String,
+    val uri: String,
     @PrimaryKey(autoGenerate = true)
     val trackId: Long = 0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -24,6 +26,7 @@ data class Track(
         parcel.writeString(spotifyTrackId)
         parcel.writeString(name)
         parcel.writeString(author)
+        parcel.writeString(uri)
         parcel.writeLong(trackId)
     }
 

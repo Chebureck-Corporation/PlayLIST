@@ -16,7 +16,9 @@ import com.chebureck.playlist.mvvm.ui.widget.playlists.PlaylistsAdapter
 import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.component.KoinApiExtension
 
+@KoinApiExtension
 class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
     PlaylistsAdapter.PlaylistAdapterClickListener {
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()

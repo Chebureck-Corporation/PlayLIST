@@ -3,22 +3,13 @@ package com.chebureck.playlist.network.api.spotify
 import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.db.Track
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.chebureck.playlist.network.api.spotify.`object`.SpotifyApiPlaylistCreate
 
 class SpotifyApiManager(
-    spotifyToken: String
+    private val spotifyService: SpotifyService
 ) {
-    private val token = "Bearer $spotifyToken"
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.spotify.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private val spotifyService = retrofit.create(SpotifyService::class.java)
-
     private fun getTracks(href: String): List<Track> {
-        val apiTracks = spotifyService.tracks(href, token)
+        val apiTracks = spotifyService.tracks(href)
             .execute()
             .body()?.items
             ?: return listOf()
@@ -27,12 +18,26 @@ class SpotifyApiManager(
             .filter { it.track != null }
             .map { subTrack ->
                 val track = subTrack.track!!
-                Track(track.id, track.name, track.artists.joinToString { it.name })
+                Track(track.id, track.name, track.artists.joinToString { it.name }, track.uri)
             }.toList()
     }
 
+    fun createPlaylist(playlist: PlaylistWithTracks): PlaylistWithTracks {
+        val createdPlaylist = spotifyService.createPlaylist(
+            getMe().id,
+            SpotifyApiPlaylistCreate(playlist.name)
+        ).execute().body() ?: throw Throwable("Created playlist can't be null")
+
+        spotifyService.addPlaylistItems(playlist, createdPlaylist.id).execute()
+
+        return PlaylistWithTracks(
+            Playlist(createdPlaylist.id, playlist.imageUrl, playlist.name, playlist.id),
+            playlist.tracks
+        )
+    }
+
     fun getMyPlaylists(): List<PlaylistWithTracks>? {
-        val apiPlaylists = spotifyService.playlists(token)
+        val apiPlaylists = spotifyService.playlists()
             .execute()
             .body()?.items
 
@@ -45,4 +50,6 @@ class SpotifyApiManager(
             }
         }
     }
+
+    private fun getMe() = spotifyService.me().execute().body()!!
 }

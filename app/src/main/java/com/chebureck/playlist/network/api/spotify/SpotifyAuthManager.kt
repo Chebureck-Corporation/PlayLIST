@@ -13,7 +13,13 @@ class SpotifyAuthManager(private val clientId: String) {
             REDIRECT_URI
         )
 
-        builder.setScopes(arrayOf("playlist-read-private"))
+        builder.setScopes(
+            arrayOf(
+                "playlist-read-private",
+                "playlist-modify-public",
+                "playlist-modify-private"
+            )
+        )
         builder.setShowDialog(showDialog)
 
         val request = builder.build()
