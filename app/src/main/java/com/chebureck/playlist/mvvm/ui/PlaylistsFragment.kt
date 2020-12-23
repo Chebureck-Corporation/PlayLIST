@@ -92,7 +92,7 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
 
         selectedPlaylistViewModel.initSelectedPlaylist(playlistWithTracks)
 
-        val action = PlaylistsFragmentDirections.actionPlaylistTracks(playlistWithTracks.name)
+        val action = PlaylistsFragmentDirections.actionPlaylistTracks()
         navController.navigate(action)
     }
 }

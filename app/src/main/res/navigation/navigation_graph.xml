@@ -50,12 +50,7 @@
         android:id="@+id/tracksFragment"
         android:name="com.chebureck.playlist.mvvm.ui.TracksFragment"
         android:label="TracksFragment"
-        tools:layout="@layout/fragment_tracks_screen">
-        <argument
-            android:name="playlistName"
-            app:argType="string"
-            android:defaultValue="Temp"/>
-    </fragment>
+        tools:layout="@layout/fragment_tracks_screen" />
     <fragment
             android:id="@+id/tracksFilterFragment"
             android:name="com.chebureck.playlist.mvvm.ui.TracksFilterFragment"

@@ -17,7 +17,6 @@ import org.koin.core.component.KoinApiExtension
 @KoinApiExtension
 class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.TrackClickListener {
 
-    private var name = "Temp"
     private val selectedPlaylistViewModel
             by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
@@ -35,14 +34,10 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments != null) {
-            name = TracksFragmentArgs.fromBundle(requireArguments()).playlistName
-        }
-
         val binding = FragmentTracksScreenBinding.bind(view)
 
         val textView = binding.textPlaylistTitle
-        textView.text = name
+        textView.text = selectedPlaylistViewModel.getSelectedPlaylist().value?.name ?: "Temp"
 
         tracks = binding.recyclerTracks
         tracks.layoutManager = LinearLayoutManager(context)
