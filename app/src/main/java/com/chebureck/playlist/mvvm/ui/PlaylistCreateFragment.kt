@@ -2,6 +2,7 @@ package com.chebureck.playlist.mvvm.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -52,19 +53,21 @@ class PlaylistCreateFragment : Fragment(R.layout.fragment_playlist_create),
             resources.getInteger(R.integer.playlists_columns)
         )
 
+        val editText = view.findViewById<EditText>(R.id.et_header)
+
         val btnAnd = binding.btnAnd
         btnAnd.setOnClickListener {
-            playlistCreateViewModel.andSelected()
+            playlistCreateViewModel.andSelected(editText.text.toString())
         }
 
         val btnOr = binding.btnOr
         btnOr.setOnClickListener {
-            playlistCreateViewModel.orSelected()
+            playlistCreateViewModel.orSelected(editText.text.toString())
         }
 
         val btnXor = binding.btnXor
         btnXor.setOnClickListener {
-            playlistCreateViewModel.xorSelected()
+            playlistCreateViewModel.xorSelected(editText.text.toString())
         }
     }
 

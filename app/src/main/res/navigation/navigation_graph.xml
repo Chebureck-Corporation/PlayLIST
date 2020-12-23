@@ -47,10 +47,15 @@
                 app:destination="@id/tracksFilterFragment" />
     </fragment>
     <fragment
-            android:id="@+id/tracksFragment"
-            android:name="com.chebureck.playlist.mvvm.ui.TracksFragment"
-            android:label="TracksFragment"
-            tools:layout="@layout/fragment_tracks_screen" />
+        android:id="@+id/tracksFragment"
+        android:name="com.chebureck.playlist.mvvm.ui.TracksFragment"
+        android:label="TracksFragment"
+        tools:layout="@layout/fragment_tracks_screen">
+        <argument
+            android:name="playlistName"
+            app:argType="string"
+            android:defaultValue="Temp"/>
+    </fragment>
     <fragment
             android:id="@+id/tracksFilterFragment"
             android:name="com.chebureck.playlist.mvvm.ui.TracksFilterFragment"

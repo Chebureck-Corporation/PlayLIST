@@ -36,21 +36,33 @@ class PlaylistCreateViewModel(
         selectedPlaylist.value = playlist
     }
 
-    fun andSelected() {
+    fun andSelected(name: String?) {
         val newTracks = ListsUtils.and(getSelectedPlaylists()) { it.filteredTracks }
-        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks)
+        var playlistName = "Temp"
+        if (name != null){
+            playlistName = name
+        }
+        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)
         saveCreatedPlaylist(newPlaylistCreatingData)
     }
 
-    fun orSelected() {
+    fun orSelected(name: String?) {
         val newTracks = ListsUtils.or(getSelectedPlaylists()) { it.filteredTracks }
-        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks)
+        var playlistName = "Temp"
+        if (name != null){
+            playlistName = name
+        }
+        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)
         saveCreatedPlaylist(newPlaylistCreatingData)
     }
 
-    fun xorSelected() {
+    fun xorSelected(name: String?) {
         val newTracks = ListsUtils.xor(getSelectedPlaylists()) { it.filteredTracks }
-        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks)
+        var playlistName = "Temp"
+        if (name != null){
+            playlistName = name
+        }
+        val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)
         saveCreatedPlaylist(newPlaylistCreatingData)
     }
 
@@ -58,10 +70,10 @@ class PlaylistCreateViewModel(
         it.selected
     }
 
-    private fun createNewPlaylistRAM(tracks: List<TrackCreateData>) = PlaylistCreateData(
+    private fun createNewPlaylistRAM(tracks: List<TrackCreateData>, name: String) = PlaylistCreateData(
         null,
         tracks,
-        "Temp"
+        name
     )
 
     private fun saveCreatedPlaylist(createdPlaylist: PlaylistCreateData) {
