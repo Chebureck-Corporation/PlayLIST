@@ -36,6 +36,9 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.
 
         val binding = FragmentTracksScreenBinding.bind(view)
 
+        val textView = binding.textPlaylistTitle
+        textView.text = selectedPlaylistViewModel.getSelectedPlaylist().value?.name ?: "Temp"
+
         tracks = binding.recyclerTracks
         tracks.layoutManager = LinearLayoutManager(context)
         tracks.adapter = tracksAdapter
