@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.mvvm.ui.widget.playlists.PlaylistsAdapter
 import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
+import com.chebureck.playlist.mvvm.viewmodel.SelectedPlaylistViewModel
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinApiExtension
@@ -21,6 +22,9 @@ import org.koin.core.component.KoinApiExtension
 @KoinApiExtension
 class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
     PlaylistsAdapter.PlaylistAdapterClickListener {
+
+    private val selectedPlaylistViewModel
+            by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
     private val playlistCreateViewModel
             by sharedViewModel<PlaylistCreateViewModel>()
@@ -83,14 +87,12 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
 
     override fun onPlaylistClicked(position: Int) {
         val playlistWithTracks =
-            spotifyViewModel.getPlaylists().value?.get(position)?.tracks
+            spotifyViewModel.getPlaylists().value?.get(position)
                 ?: throw Throwable("Unpredicted behavior")
-        val bundle = Bundle().apply {
-            putParcelableArray(
-                TracksFragment.BUNDLE_NAME_TRACKS,
-                playlistWithTracks.toTypedArray()
-            )
-        }
-        navController.navigate(R.id.tracksFragment, bundle)
+
+        selectedPlaylistViewModel.initSelectedPlaylist(playlistWithTracks)
+
+        val action = PlaylistsFragmentDirections.actionPlaylistTracks()
+        navController.navigate(action)
     }
 }

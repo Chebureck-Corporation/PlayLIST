@@ -10,6 +10,7 @@ import com.chebureck.playlist.db.PlaylistDatabase
 import com.chebureck.playlist.db.SpotifyTokenProviderImpl
 import com.chebureck.playlist.mvvm.repository.PlaylistRepository
 import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
+import com.chebureck.playlist.mvvm.viewmodel.SelectedPlaylistViewModel
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
 import com.chebureck.playlist.network.api.spotify.SpotifyApiManager
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager
@@ -37,6 +38,9 @@ val viewModule = module {
     }
     viewModel<PlaylistCreateViewModel> {
         PlaylistCreateViewModel(get())
+    }
+    viewModel<SelectedPlaylistViewModel> {
+        SelectedPlaylistViewModel()
     }
 }
 
