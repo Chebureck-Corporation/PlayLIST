@@ -14,6 +14,7 @@ data class Track(
     @PrimaryKey(autoGenerate = true)
     val trackId: Long = 0
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
@@ -32,6 +33,28 @@ data class Track(
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Track
+
+        if (spotifyTrackId != other.spotifyTrackId) return false
+        if (name != other.name) return false
+        if (author != other.author) return false
+        if (uri != other.uri) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = spotifyTrackId.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + author.hashCode()
+        result = 31 * result + uri.hashCode()
+        return result
     }
 
     companion object CREATOR : Parcelable.Creator<Track> {

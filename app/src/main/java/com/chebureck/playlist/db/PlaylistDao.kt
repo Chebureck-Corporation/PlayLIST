@@ -16,7 +16,7 @@ abstract class PlaylistDao {
     @Insert
     protected abstract fun insertPlaylistEntity(playlist: Playlist): Long
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     protected abstract fun insertTrackEntity(track: Track): Long
 
     @Insert

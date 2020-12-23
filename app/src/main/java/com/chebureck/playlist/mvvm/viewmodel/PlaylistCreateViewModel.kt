@@ -9,7 +9,6 @@ import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.db.Track
 import com.chebureck.playlist.mvvm.repository.PlaylistRepository
 import com.chebureck.playlist.utils.ListsUtils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PlaylistCreateViewModel(
@@ -17,18 +16,24 @@ class PlaylistCreateViewModel(
 ) : ViewModel() {
     private val playlistsLiveData = MutableLiveData<List<PlaylistCreateData>>()
     private val generatedPlaylist = MutableLiveData<Event<PlaylistCreateData>>()
+    private val selectedPlaylist = MutableLiveData<PlaylistCreateData>()
 
     fun getPlaylists(): LiveData<List<PlaylistCreateData>> = playlistsLiveData
     fun getCreatedPlaylist(): LiveData<Event<PlaylistCreateData>> = generatedPlaylist
+    fun getSelectedPlaylist(): LiveData<PlaylistCreateData> = selectedPlaylist
 
     fun initPlaylists(playlists: List<PlaylistWithTracks>) {
-        playlistsLiveData.value = playlists.map {
+        playlistsLiveData.value = playlists.map { playlist ->
             PlaylistCreateData(
-                it.imageUrl,
-                it.tracks,
-                it.name
+                playlist.imageUrl,
+                playlist.tracks.map { TrackCreateData(it) },
+                playlist.name
             )
         }
+    }
+
+    fun setSelectedPlaylist(playlist: PlaylistCreateData?) {
+        selectedPlaylist.value = playlist
     }
 
     fun andSelected() {
@@ -53,7 +58,7 @@ class PlaylistCreateViewModel(
         it.selected
     }
 
-    private fun createNewPlaylistRAM(tracks: List<Track>) = PlaylistCreateData(
+    private fun createNewPlaylistRAM(tracks: List<TrackCreateData>) = PlaylistCreateData(
         null,
         tracks,
         "Temp"
@@ -64,23 +69,30 @@ class PlaylistCreateViewModel(
             playlistRepository.saveLocalPlaylist(
                 PlaylistWithTracks(
                     Playlist(null, createdPlaylist.imageUrl, createdPlaylist.name),
-                    createdPlaylist.filteredTracks
+                    createdPlaylist.filteredTracks.map { it.track }
                 )
             )
             generatedPlaylist.postValue(Event(createdPlaylist))
         }
     }
 
-    fun setSelected(position: Int, selected: Boolean) {
+    fun setSelectedPlaylist(position: Int, selected: Boolean) {
         playlistsLiveData.value?.get(position)?.let { it.selected = selected }
     }
 }
 
 data class PlaylistCreateData(
     val imageUrl: String?,
-    val originalTracks: List<Track>,
+    val tracks: List<TrackCreateData>,
     val name: String,
     var selected: Boolean = false
 ) {
-    val filteredTracks = originalTracks
+    val filteredTracks
+        get() = tracks.filter { it.selected }
+}
+
+data class TrackCreateData(
+    val track: Track,
+) {
+    var selected: Boolean = true
 }
