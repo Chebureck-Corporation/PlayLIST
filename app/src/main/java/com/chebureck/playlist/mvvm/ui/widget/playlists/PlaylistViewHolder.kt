@@ -13,6 +13,7 @@ class PlaylistViewHolder(
     itemView: View,
     playlistClickListener: PlaylistClickListener
 ) : RecyclerView.ViewHolder(itemView) {
+
     private var playlistName = itemView.findViewById<TextView>(R.id.tv_name)
     private val playlistImage = itemView.findViewById<ImageView>(R.id.iv_playlist)
     private var selected = false

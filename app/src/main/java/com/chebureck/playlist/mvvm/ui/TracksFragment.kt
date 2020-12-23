@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
 import com.chebureck.playlist.db.Track
 import com.chebureck.playlist.mvvm.ui.widget.tracks.TracksAdapter
+import com.chebureck.playlist.mvvm.ui.widget.tracks.TracksAdapterItem
 
-class TracksFragment : Fragment(R.layout.fragment_tracks_screen) {
-    private val tracksAdapter = TracksAdapter()
+class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.TrackClickListener {
+    private val tracksAdapter = TracksAdapter(this)
     private lateinit var tracks: RecyclerView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         @Suppress("UNCHECKED_CAST")
         val tracks = arguments?.getParcelableArray(BUNDLE_NAME_TRACKS) as Array<Track>
-        tracksAdapter.tracks = tracks.toList()
+        tracksAdapter.tracks = tracks.toList().map { TracksAdapterItem(it, false) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,6 +28,14 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen) {
         tracks = view.findViewById(R.id.recycler_tracks)
         tracks.layoutManager = LinearLayoutManager(context)
         tracks.adapter = tracksAdapter
+    }
+
+    override fun onTrackClicked(position: Int) {
+
+    }
+
+    override fun onTrackLongClicked(position: Int, selected: Boolean) {
+
     }
 
     companion object {

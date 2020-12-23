@@ -35,6 +35,11 @@ class PlaylistCreateFragment : Fragment(R.layout.fragment_playlist_create),
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        playlistCreateViewModel.setSelectedPlaylist(null)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,10 +69,16 @@ class PlaylistCreateFragment : Fragment(R.layout.fragment_playlist_create),
     }
 
     override fun onPlaylistClicked(position: Int) {
-
+        playlistCreateViewModel.setSelectedPlaylist(
+            playlistCreateViewModel.getPlaylists().value?.get(
+                position
+            )
+        )
+        val action = PlaylistCreateFragmentDirections.actionPlaylistSelected()
+        findNavController().navigate(action)
     }
 
     override fun onPlaylistLongClicked(position: Int, selected: Boolean) {
-        playlistCreateViewModel.setSelected(position, selected)
+        playlistCreateViewModel.setSelectedPlaylist(position, selected)
     }
 }

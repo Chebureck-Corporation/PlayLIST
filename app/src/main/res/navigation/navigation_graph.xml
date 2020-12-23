@@ -36,16 +36,24 @@
             android:id="@+id/playlistCreateFragment"
             android:name="com.chebureck.playlist.mvvm.ui.PlaylistCreateFragment"
             android:label="PlaylistCreateFragment"
-            tools:layout="@layout/fragment_playlist_create" >
+            tools:layout="@layout/fragment_playlist_create">
         <action
                 android:id="@+id/action_playlist_created"
                 app:destination="@id/playlistsFragment"
                 app:popUpTo="@id/playlistsFragment"
                 app:popUpToInclusive="true" />
+        <action
+                android:id="@+id/action_playlist_selected"
+                app:destination="@id/tracksFilterFragment" />
     </fragment>
     <fragment
             android:id="@+id/tracksFragment"
             android:name="com.chebureck.playlist.mvvm.ui.TracksFragment"
             android:label="TracksFragment"
             tools:layout="@layout/fragment_tracks_screen" />
+    <fragment
+            android:id="@+id/tracksFilterFragment"
+            android:name="com.chebureck.playlist.mvvm.ui.TracksFilterFragment"
+            android:label="TracksFilterFragment"
+            tools:layout="@layout/fragment_tracks_filter" />
 </navigation>
