@@ -50,10 +50,28 @@
         android:id="@+id/tracksFragment"
         android:name="com.chebureck.playlist.mvvm.ui.TracksFragment"
         android:label="TracksFragment"
-        tools:layout="@layout/fragment_tracks_screen" />
+        tools:layout="@layout/fragment_tracks_screen" >
+        <action
+                android:id="@+id/action_tracksFragment_to_optionsFragment"
+                app:destination="@id/optionsFragment" />
+    </fragment>
     <fragment
             android:id="@+id/tracksFilterFragment"
             android:name="com.chebureck.playlist.mvvm.ui.TracksFilterFragment"
             android:label="TracksFilterFragment"
             tools:layout="@layout/fragment_tracks_filter" />
+    <dialog
+            android:id="@+id/optionsFragment"
+            android:name="com.chebureck.playlist.mvvm.ui.widget.dialog.OptionsFragment"
+            android:label="OptionsFragment"
+            tools:layout="@layout/options_fragment" >
+        <action
+                android:id="@+id/action_optionsFragment_to_editFragment"
+                app:destination="@id/editFragment" />
+    </dialog>
+    <dialog
+            android:id="@+id/editFragment"
+            android:name="com.chebureck.playlist.mvvm.ui.widget.dialog.EditFragment"
+            android:label="EditFragment"
+            tools:layout="@layout/edit_fragment" />
 </navigation>

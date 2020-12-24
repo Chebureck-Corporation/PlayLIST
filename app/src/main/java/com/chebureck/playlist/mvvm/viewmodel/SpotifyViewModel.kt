@@ -73,6 +73,12 @@ class SpotifyViewModel(
         }
     }
 
+    fun updateSpotifyPlaylist(playlist: PlaylistWithTracks) {
+        viewModelScope.launch {
+            playlistRepository.updateSpotifyPlaylist(playlist)
+        }
+    }
+
     private fun refreshToken(newToken: String?) {
         newToken?.let {
             playlistRepository.setSpotifyApiManager(get { parametersOf(newToken) })

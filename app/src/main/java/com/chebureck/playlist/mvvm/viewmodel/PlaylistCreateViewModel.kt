@@ -88,6 +88,10 @@ class PlaylistCreateViewModel(
         }
     }
 
+    private fun updateSpotifyPlaylist(updatedPlaylist: PlaylistWithTracks) {
+        playlistRepository.updateSpotifyPlaylist(updatedPlaylist)
+    }
+
     fun setSelectedPlaylist(position: Int, selected: Boolean) {
         playlistsLiveData.value?.get(position)?.let { it.selected = selected }
     }

@@ -52,6 +52,10 @@ class PlaylistRepository(
             playlistDao.deletePlaylistWithTracks(createdPlaylist)
         }
     }
+
+    fun updateSpotifyPlaylist(playlist: PlaylistWithTracks) {
+        spotifyApiManager?.updatePlaylist(playlist)
+    }
 }
 
 data class PlaylistsCallback(

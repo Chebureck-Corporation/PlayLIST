@@ -11,4 +11,7 @@
     <string name="playlist_name">Playlist name</string>
     <string name="string_login">Log in to account</string>
     <string name="string_sign">Sign in with Spotify</string>
+    <string name="edit">Edit</string>
+    <string name="load_to_spotify">Load to Spotify</string>
+    <string name="delete">Delete</string>
 </resources>
