@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.chebureck.playlist.R
 import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.db.PlaylistWithTracks
@@ -22,6 +24,7 @@ class EditFragment : DialogFragment() {
     private val selectedPlaylistViewModel
             by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,22 +37,21 @@ class EditFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = requireParentFragment().requireView().findNavController()
+
         val editText = view.findViewById<EditText>(R.id.edit_name)
         editText.setText(selectedPlaylistViewModel.getSelectedPlaylist().value?.name)
 
         val editBtn = view.findViewById<Button>(R.id.edit_button)
         editBtn.setOnClickListener{
             if (editText.text.toString() != ""){
-                selectedPlaylistViewModel.initSelectedPlaylist(PlaylistWithTracks(Playlist(
-                    selectedPlaylistViewModel.getSelectedPlaylist().value!!.spotifyId,
-                    selectedPlaylistViewModel.getSelectedPlaylist().value!!.imageUrl,
-                    editText.text.toString(),
-                    selectedPlaylistViewModel.getSelectedPlaylist().value!!.id
-                ), selectedPlaylistViewModel.getSelectedPlaylist().value!!.tracks))
+                selectedPlaylistViewModel.setPlaylistName(editText.text.toString())
                 selectedPlaylistViewModel.getSelectedPlaylist().value?.let {
-                        playlist -> spotifyViewModel.updateSpotifyPlaylist(playlist)
+                    spotifyViewModel.updatePlaylistName(it)
                 }
             }
+            val action = EditFragmentDirections.actionEditFragmentToPlaylistsFragment()
+            navController.navigate(action)
         }
     }
 }

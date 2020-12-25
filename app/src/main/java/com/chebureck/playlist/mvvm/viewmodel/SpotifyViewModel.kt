@@ -73,9 +73,15 @@ class SpotifyViewModel(
         }
     }
 
-    fun updateSpotifyPlaylist(playlist: PlaylistWithTracks) {
+    fun updatePlaylistName(playlist: PlaylistWithTracks) {
         viewModelScope.launch {
-            playlistRepository.updateSpotifyPlaylist(playlist)
+            playlistRepository.updatePlaylistName(playlist)
+        }
+    }
+
+    fun unfollowPlaylist(playlist: PlaylistWithTracks) {
+        viewModelScope.launch {
+            playlistRepository.unfollowPlaylist(playlist)
         }
     }
 

@@ -31,11 +31,15 @@ interface SpotifyService {
     ) : Call<Void>
 
     @Headers("Constent-Type: application/json")
-    @PUT("/$API_VERSION/users/{user_id}/playlists/{playlist_id}")
-    fun updatePlaylist(
-        @Path("user_id") userId: String,
+    @PUT("/$API_VERSION/playlists/{playlist_id}")
+    fun updatePlaylistName(
         @Path("playlist_id") playlistId: String,
         @Body playlistUpdate: SpotifyApiPlaylistCreate
+    ) : Call<Void>
+
+    @DELETE("/$API_VERSION/playlists/{playlist_id}/followers")
+    fun unfollowPlaylist(
+        @Path("playlist_id") playlistId: String
     ) : Call<Void>
 
     companion object {

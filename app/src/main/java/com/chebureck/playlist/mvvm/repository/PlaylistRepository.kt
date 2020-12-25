@@ -53,8 +53,24 @@ class PlaylistRepository(
         }
     }
 
-    fun updateSpotifyPlaylist(playlist: PlaylistWithTracks) {
-        spotifyApiManager?.updatePlaylist(playlist)
+    suspend fun updatePlaylistName(playlist: PlaylistWithTracks) {
+        withContext(Dispatchers.IO){
+            if (playlist.spotifyId != null){
+                    spotifyApiManager?.updatePlaylistName(playlist, playlist.name)
+            } else{
+                playlistDao.updatePlaylistName(playlist)
+            }
+        }
+    }
+
+    suspend fun unfollowPlaylist(playlist: PlaylistWithTracks) {
+        withContext(Dispatchers.IO){
+            if (playlist.spotifyId != null){
+                spotifyApiManager?.unfollowPlaylist(playlist.spotifyId!!)
+            } else{
+                playlistDao.deletePlaylistWithTracks(playlist)
+            }
+        }
     }
 }
 

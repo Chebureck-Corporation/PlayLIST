@@ -33,23 +33,34 @@ class OptionsFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO setting navController
+        navController = requireParentFragment().requireView().findNavController()
 
         val load = view.findViewById<Button>(R.id.load_button)
-        load.setOnClickListener {
-            selectedPlaylistViewModel.getSelectedPlaylist().value?.let { playlist ->
-                spotifyViewModel.createSpotifyPlaylist(playlist)
+        if (selectedPlaylistViewModel.getSelectedPlaylist().value?.spotifyId == null) {
+            load?.setOnClickListener {
+                selectedPlaylistViewModel.getSelectedPlaylist().value?.let { playlist ->
+                    spotifyViewModel.createSpotifyPlaylist(playlist)
+                }
+                val action = OptionsFragmentDirections.actionOptionsFragmentToPlaylistsFragment()
+                navController.navigate(action)
             }
+        } else{
+            (load.parent as ViewGroup).removeView(load)
         }
 
         val edit = view.findViewById<Button>(R.id.edit_button)
         edit.setOnClickListener {
-            // TODO navigation
+            val action = OptionsFragmentDirections.actionOptionsFragmentToEditFragment()
+            navController.navigate(action)
         }
 
         val delete = view.findViewById<Button>(R.id.delete_button)
         delete.setOnClickListener{
-            //TODO deleting of playlist
+            selectedPlaylistViewModel.getSelectedPlaylist().value?.let { playlist ->
+                spotifyViewModel.unfollowPlaylist(playlist)
+            }
+            val action = OptionsFragmentDirections.actionOptionsFragmentToPlaylistsFragment()
+            navController.navigate(action)
         }
     }
 }

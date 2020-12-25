@@ -36,14 +36,17 @@ class SpotifyApiManager(
         )
     }
 
-    fun updatePlaylist(playlist: PlaylistWithTracks) {
+    fun updatePlaylistName(playlist: PlaylistWithTracks, name: String) {
         playlist.spotifyId?.let {
-            spotifyService.updatePlaylist(
-                getMe().id,
+            spotifyService.updatePlaylistName(
                 it,
-                SpotifyApiPlaylistCreate(playlist.name)
+                SpotifyApiPlaylistCreate(name)
             ).execute()
         }
+    }
+
+    fun unfollowPlaylist(playlistId: String) {
+        spotifyService.unfollowPlaylist(playlistId)
     }
 
     fun getMyPlaylists(): List<PlaylistWithTracks>? {
