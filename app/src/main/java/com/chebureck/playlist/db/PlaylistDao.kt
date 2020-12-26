@@ -29,7 +29,7 @@ abstract class PlaylistDao {
     protected abstract fun deletePlaylistTrackCrossRef(playlistTrackCrossRef: PlaylistTrackCrossRef)
 
     @Update
-    protected abstract fun updatePlaylistName(playlist: Playlist)
+    protected abstract fun updatePlaylist(playlist: Playlist)
 
     @Transaction
     open fun deletePlaylistWithTracks(playlist: PlaylistWithTracks) {
@@ -52,8 +52,8 @@ abstract class PlaylistDao {
 
     @Transaction
     open fun updatePlaylist(playlist: PlaylistWithTracks, name: String){
-        var newPlaylist = playlist.playlist
+        val newPlaylist = playlist.playlist
         newPlaylist.name = name
-        updatePlaylistName(newPlaylist)
+        updatePlaylist(newPlaylist)
     }
 }
