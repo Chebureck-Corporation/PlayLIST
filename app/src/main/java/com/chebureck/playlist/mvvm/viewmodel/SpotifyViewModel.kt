@@ -73,9 +73,9 @@ class SpotifyViewModel(
         }
     }
 
-    fun updatePlaylistName(playlist: PlaylistWithTracks) {
+    fun updatePlaylistName(playlist: PlaylistWithTracks, name: String) {
         viewModelScope.launch {
-            playlistRepository.updatePlaylistName(playlist)
+            playlistRepository.updatePlaylistName(playlist, name)
         }
     }
 

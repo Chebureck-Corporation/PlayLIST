@@ -51,7 +51,9 @@ abstract class PlaylistDao {
     }
 
     @Transaction
-    open fun updatePlaylistName(playlist: PlaylistWithTracks){
-        updatePlaylistName(playlist.playlist)
+    open fun updatePlaylist(playlist: PlaylistWithTracks, name: String){
+        var newPlaylist = playlist.playlist
+        newPlaylist.name = name
+        updatePlaylistName(newPlaylist)
     }
 }

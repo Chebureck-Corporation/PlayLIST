@@ -45,8 +45,8 @@ class SpotifyApiManager(
         }
     }
 
-    fun unfollowPlaylist(playlistId: String) {
-        spotifyService.unfollowPlaylist(playlistId)
+    fun unfollowPlaylist(playlist: PlaylistWithTracks) {
+        spotifyService.unfollowPlaylist(playlist.spotifyId!!).execute()
     }
 
     fun getMyPlaylists(): List<PlaylistWithTracks>? {

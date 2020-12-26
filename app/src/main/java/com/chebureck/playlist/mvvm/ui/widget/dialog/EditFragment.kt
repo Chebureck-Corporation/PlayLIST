@@ -45,9 +45,8 @@ class EditFragment : DialogFragment() {
         val editBtn = view.findViewById<Button>(R.id.edit_button)
         editBtn.setOnClickListener{
             if (editText.text.toString() != ""){
-                selectedPlaylistViewModel.setPlaylistName(editText.text.toString())
                 selectedPlaylistViewModel.getSelectedPlaylist().value?.let {
-                    spotifyViewModel.updatePlaylistName(it)
+                    spotifyViewModel.updatePlaylistName(it, editText.text.toString())
                 }
             }
             val action = EditFragmentDirections.actionEditFragmentToPlaylistsFragment()
