@@ -11,4 +11,7 @@
     <string name="string_login">Войдите в аккаунт</string>
     <string name="string_sign">Вход через Spotify.</string>
     <string name="exit">Выйти</string>
+    <string name="edit">Редактировать</string>
+    <string name="load_to_spotify">Загрузить на Spotify</string>
+    <string name="delete">Удалить</string>
 </resources>

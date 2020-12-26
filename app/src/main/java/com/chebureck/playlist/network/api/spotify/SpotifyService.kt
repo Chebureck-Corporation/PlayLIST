@@ -1,6 +1,7 @@
 package com.chebureck.playlist.network.api.spotify
 
 import com.chebureck.playlist.db.PlaylistWithTracks
+import com.chebureck.playlist.network.api.spotify.SpotifyService.Companion.API_VERSION
 import com.chebureck.playlist.network.api.spotify.`object`.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -27,6 +28,18 @@ interface SpotifyService {
     fun addPlaylistItems(
         @Path("id") id: String,
         @Body trackUris: TrackUris
+    ) : Call<Void>
+
+    @Headers("Constent-Type: application/json")
+    @PUT("/$API_VERSION/playlists/{playlist_id}")
+    fun updatePlaylistName(
+        @Path("playlist_id") playlistId: String,
+        @Body playlistUpdate: SpotifyApiPlaylistCreate
+    ) : Call<Void>
+
+    @DELETE("/$API_VERSION/playlists/{playlist_id}/followers")
+    fun unfollowPlaylist(
+        @Path("playlist_id") playlistId: String
     ) : Call<Void>
 
     companion object {

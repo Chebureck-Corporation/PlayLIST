@@ -36,6 +36,19 @@ class SpotifyApiManager(
         )
     }
 
+    fun updatePlaylistName(playlist: PlaylistWithTracks, name: String) {
+        playlist.spotifyId?.let {
+            spotifyService.updatePlaylistName(
+                it,
+                SpotifyApiPlaylistCreate(name)
+            ).execute()
+        }
+    }
+
+    fun unfollowPlaylist(playlist: PlaylistWithTracks) {
+        spotifyService.unfollowPlaylist(playlist.spotifyId!!).execute()
+    }
+
     fun getMyPlaylists(): List<PlaylistWithTracks>? {
         val apiPlaylists = spotifyService.playlists()
             .execute()

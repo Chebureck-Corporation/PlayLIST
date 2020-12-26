@@ -3,6 +3,8 @@ package com.chebureck.playlist.mvvm.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chebureck.playlist.R
@@ -20,6 +22,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.
     private val selectedPlaylistViewModel
             by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
+    private lateinit var navController: NavController
 
     private val tracksAdapter = TracksAdapter(this)
     private lateinit var tracks: RecyclerView
@@ -39,15 +42,16 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.
         val textView = binding.textPlaylistTitle
         textView.text = selectedPlaylistViewModel.getSelectedPlaylist().value?.name ?: "Temp"
 
+        navController = view.findNavController()
+
         tracks = binding.recyclerTracks
         tracks.layoutManager = LinearLayoutManager(context)
         tracks.adapter = tracksAdapter
 
         val options = binding.btnOptions
         options.setOnClickListener {
-            selectedPlaylistViewModel.getSelectedPlaylist().value?.let { playlist ->
-                spotifyViewModel.createSpotifyPlaylist(playlist)
-            }
+            val action = TracksFragmentDirections.actionTracksFragmentToOptionsFragment();
+            navController.navigate(action)
         }
     }
 
