@@ -11,11 +11,12 @@ import com.chebureck.playlist.mvvm.ui.widget.tracks.TracksAdapterItem
 import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class TracksFilterFragment : Fragment(R.layout.fragment_tracks_filter),
+class TracksFilterFragment :
+    Fragment(R.layout.fragment_tracks_filter),
     TracksAdapter.TrackClickListener {
 
     private val playlistCreateViewModel
-            by sharedViewModel<PlaylistCreateViewModel>()
+    by sharedViewModel<PlaylistCreateViewModel>()
 
     private val tracksAdapter = TracksAdapter(this)
 
@@ -36,7 +37,6 @@ class TracksFilterFragment : Fragment(R.layout.fragment_tracks_filter),
     }
 
     override fun onTrackClicked(position: Int) {
-
     }
 
     override fun onTrackLongClicked(position: Int, selected: Boolean) {

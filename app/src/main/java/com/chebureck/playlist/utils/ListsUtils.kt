@@ -29,4 +29,9 @@ object ListsUtils {
         }
         return result
     }
+    fun <T> createSublist(list: List<T>, sublistSize: Int): List<List<T>> {
+        return list.withIndex()
+            .groupBy { it.index / sublistSize }
+            .map { it.value.map { it.value } }
+    }
 }

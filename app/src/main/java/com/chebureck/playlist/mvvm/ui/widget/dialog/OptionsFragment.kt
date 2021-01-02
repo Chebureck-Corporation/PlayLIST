@@ -1,11 +1,13 @@
 package com.chebureck.playlist.mvvm.ui.widget.dialog
 
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.chebureck.playlist.R
 import com.chebureck.playlist.mvvm.viewmodel.SelectedPlaylistViewModel
@@ -17,7 +19,7 @@ import org.koin.core.component.KoinApiExtension
 class OptionsFragment : DialogFragment() {
 
     private val selectedPlaylistViewModel
-            by sharedViewModel<SelectedPlaylistViewModel>()
+    by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
     private lateinit var navController: NavController
 
@@ -44,7 +46,7 @@ class OptionsFragment : DialogFragment() {
                 val action = OptionsFragmentDirections.actionOptionsFragmentToPlaylistsFragment()
                 navController.navigate(action)
             }
-        } else{
+        } else {
             (load.parent as ViewGroup).removeView(load)
         }
 
@@ -55,7 +57,7 @@ class OptionsFragment : DialogFragment() {
         }
 
         val delete = view.findViewById<Button>(R.id.delete_button)
-        delete.setOnClickListener{
+        delete.setOnClickListener {
             selectedPlaylistViewModel.getSelectedPlaylist().value?.let { playlist ->
                 spotifyViewModel.unfollowPlaylist(playlist)
             }

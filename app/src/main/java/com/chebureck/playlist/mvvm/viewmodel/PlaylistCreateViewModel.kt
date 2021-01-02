@@ -39,7 +39,7 @@ class PlaylistCreateViewModel(
     fun andSelected(name: String?) {
         val newTracks = ListsUtils.and(getSelectedPlaylists()) { it.filteredTracks }
         var playlistName = "Temp"
-        if (name != null){
+        if (name != null) {
             playlistName = name
         }
         val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)
@@ -49,7 +49,7 @@ class PlaylistCreateViewModel(
     fun orSelected(name: String?) {
         val newTracks = ListsUtils.or(getSelectedPlaylists()) { it.filteredTracks }
         var playlistName = "Temp"
-        if (name != null){
+        if (name != null) {
             playlistName = name
         }
         val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)
@@ -59,7 +59,7 @@ class PlaylistCreateViewModel(
     fun xorSelected(name: String?) {
         val newTracks = ListsUtils.xor(getSelectedPlaylists()) { it.filteredTracks }
         var playlistName = "Temp"
-        if (name != null){
+        if (name != null) {
             playlistName = name
         }
         val newPlaylistCreatingData = createNewPlaylistRAM(newTracks, playlistName)

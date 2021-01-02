@@ -20,14 +20,15 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinApiExtension
 
 @KoinApiExtension
-class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
+class PlaylistsFragment :
+    Fragment(R.layout.fragment_playlists),
     PlaylistsAdapter.PlaylistAdapterClickListener {
 
     private val selectedPlaylistViewModel
-            by sharedViewModel<SelectedPlaylistViewModel>()
+    by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
     private val playlistCreateViewModel
-            by sharedViewModel<PlaylistCreateViewModel>()
+    by sharedViewModel<PlaylistCreateViewModel>()
     private lateinit var navController: NavController
 
     private val playlistsAdapter = PlaylistsAdapter(this)
@@ -82,7 +83,6 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists),
     }
 
     override fun onPlaylistLongClicked(position: Int, selected: Boolean) {
-
     }
 
     override fun onPlaylistClicked(position: Int) {

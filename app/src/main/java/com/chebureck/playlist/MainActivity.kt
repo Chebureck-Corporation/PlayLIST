@@ -2,7 +2,6 @@ package com.chebureck.playlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.chebureck.playlist.mvvm.viewmodel.SpotifyViewModel
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager

@@ -54,21 +54,21 @@ class PlaylistRepository(
     }
 
     suspend fun updatePlaylistName(playlist: PlaylistWithTracks, name: String) {
-        withContext(Dispatchers.IO){
-            if (playlist.spotifyId != null){
-                    spotifyApiManager?.updatePlaylistName(playlist, name)
+        withContext(Dispatchers.IO) {
+            if (playlist.spotifyId != null) {
+                spotifyApiManager?.updatePlaylistName(playlist, name)
                 requestPlaylists()
-            } else{
+            } else {
                 playlistDao.updatePlaylist(playlist, name)
             }
         }
     }
 
     suspend fun unfollowPlaylist(playlist: PlaylistWithTracks) {
-        withContext(Dispatchers.IO){
-            if (playlist.spotifyId != null){
-                spotifyApiManager?.unfollowPlaylist(playlist)
-            } else{
+        withContext(Dispatchers.IO) {
+            if (playlist.spotifyId != null) {
+                spotifyApiManager?.unFollowPlaylist(playlist)
+            } else {
                 playlistDao.deletePlaylistWithTracks(playlist)
             }
         }
@@ -88,4 +88,3 @@ data class PlaylistsCallback(
         playlists = localData.toMutableList().apply { addAll(spotifyData) }
     }
 }
-
