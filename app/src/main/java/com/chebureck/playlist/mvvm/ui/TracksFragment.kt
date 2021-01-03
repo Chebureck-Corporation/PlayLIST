@@ -20,7 +20,7 @@ import org.koin.core.component.KoinApiExtension
 class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.TrackClickListener {
 
     private val selectedPlaylistViewModel
-            by sharedViewModel<SelectedPlaylistViewModel>()
+    by sharedViewModel<SelectedPlaylistViewModel>()
     private val spotifyViewModel by sharedViewModel<SpotifyViewModel>()
     private lateinit var navController: NavController
 
@@ -50,17 +50,15 @@ class TracksFragment : Fragment(R.layout.fragment_tracks_screen), TracksAdapter.
 
         val options = binding.btnOptions
         options.setOnClickListener {
-            val action = TracksFragmentDirections.actionTracksFragmentToOptionsFragment();
+            val action = TracksFragmentDirections.actionTracksFragmentToOptionsFragment()
             navController.navigate(action)
         }
     }
 
     override fun onTrackClicked(position: Int) {
-
     }
 
     override fun onTrackLongClicked(position: Int, selected: Boolean) {
-
     }
 
     companion object {

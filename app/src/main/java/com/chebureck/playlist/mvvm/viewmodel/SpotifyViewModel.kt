@@ -1,7 +1,8 @@
 package com.chebureck.playlist.mvvm.viewmodel
 
 import android.app.Activity
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.mvvm.repository.PlaylistRepository
 import com.chebureck.playlist.network.api.spotify.SpotifyAuthManager

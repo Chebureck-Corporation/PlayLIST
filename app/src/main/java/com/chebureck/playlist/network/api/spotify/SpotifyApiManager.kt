@@ -4,6 +4,8 @@ import com.chebureck.playlist.db.Playlist
 import com.chebureck.playlist.db.PlaylistWithTracks
 import com.chebureck.playlist.db.Track
 import com.chebureck.playlist.network.api.spotify.`object`.SpotifyApiPlaylistCreate
+import com.chebureck.playlist.network.api.spotify.`object`.TrackUris
+import com.chebureck.playlist.utils.ListsUtils
 
 class SpotifyApiManager(
     private val spotifyService: SpotifyService
@@ -27,8 +29,17 @@ class SpotifyApiManager(
             getMe().id,
             SpotifyApiPlaylistCreate(playlist.name)
         ).execute().body() ?: throw Throwable("Created playlist can't be null")
-
-        spotifyService.addPlaylistItems(playlist, createdPlaylist.id).execute()
+        if (playlist.tracks.size <= SPOTIFY_MAX_TRACKS_TO_UPLOAD) {
+            spotifyService.addPlaylistItems(playlist, createdPlaylist.id).execute()
+        } else {
+            ListsUtils.createSublist(
+                TrackUris(playlist.tracks.map { it.uri }).uris,
+                SPOTIFY_MAX_TRACKS_TO_UPLOAD
+            ).forEach {
+                val trackUrisSublist = TrackUris(it)
+                spotifyService.addPlaylistItems(playlist, createdPlaylist.id, trackUrisSublist).execute()
+            }
+        }
 
         return PlaylistWithTracks(
             Playlist(createdPlaylist.id, playlist.imageUrl, playlist.name, playlist.id),
@@ -45,7 +56,7 @@ class SpotifyApiManager(
         }
     }
 
-    fun unfollowPlaylist(playlist: PlaylistWithTracks) {
+    fun unFollowPlaylist(playlist: PlaylistWithTracks) {
         spotifyService.unfollowPlaylist(playlist.spotifyId!!).execute()
     }
 
@@ -65,4 +76,8 @@ class SpotifyApiManager(
     }
 
     private fun getMe() = spotifyService.me().execute().body()!!
+
+    companion object {
+        const val SPOTIFY_MAX_TRACKS_TO_UPLOAD = 100
+    }
 }

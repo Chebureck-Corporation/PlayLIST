@@ -1,10 +1,20 @@
 package com.chebureck.playlist.network.api.spotify
 
 import com.chebureck.playlist.db.PlaylistWithTracks
-import com.chebureck.playlist.network.api.spotify.SpotifyService.Companion.API_VERSION
-import com.chebureck.playlist.network.api.spotify.`object`.*
+import com.chebureck.playlist.network.api.spotify.`object`.SpotifyApiPlaylist
+import com.chebureck.playlist.network.api.spotify.`object`.SpotifyApiPlaylistCreate
+import com.chebureck.playlist.network.api.spotify.`object`.SpotifyUser
+import com.chebureck.playlist.network.api.spotify.`object`.TrackUris
+import com.chebureck.playlist.network.api.spotify.`object`.TracksInfo
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Url
 
 interface SpotifyService {
     @GET("/$API_VERSION/me/playlists")
@@ -28,19 +38,19 @@ interface SpotifyService {
     fun addPlaylistItems(
         @Path("id") id: String,
         @Body trackUris: TrackUris
-    ) : Call<Void>
+    ): Call<Void>
 
     @Headers("Constent-Type: application/json")
     @PUT("/$API_VERSION/playlists/{playlist_id}")
     fun updatePlaylistName(
         @Path("playlist_id") playlistId: String,
         @Body playlistUpdate: SpotifyApiPlaylistCreate
-    ) : Call<Void>
+    ): Call<Void>
 
     @DELETE("/$API_VERSION/playlists/{playlist_id}/followers")
     fun unfollowPlaylist(
         @Path("playlist_id") playlistId: String
-    ) : Call<Void>
+    ): Call<Void>
 
     companion object {
         const val API_VERSION = "v1"

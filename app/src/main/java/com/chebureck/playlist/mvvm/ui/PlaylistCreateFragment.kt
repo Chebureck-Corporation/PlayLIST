@@ -13,11 +13,12 @@ import com.chebureck.playlist.mvvm.ui.widget.playlists.PlaylistsAdapter
 import com.chebureck.playlist.mvvm.viewmodel.PlaylistCreateViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class PlaylistCreateFragment : Fragment(R.layout.fragment_playlist_create),
+class PlaylistCreateFragment :
+    Fragment(R.layout.fragment_playlist_create),
     PlaylistsAdapter.PlaylistAdapterClickListener {
 
     private val playlistCreateViewModel
-            by sharedViewModel<PlaylistCreateViewModel>()
+    by sharedViewModel<PlaylistCreateViewModel>()
 
     private val playlistsAdapter = PlaylistsAdapter(this)
 
