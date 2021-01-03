@@ -1,6 +1,7 @@
 package com.chebureck.playlist.mvvm.viewmodel
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -89,10 +90,17 @@ class SpotifyViewModel(
         }
     }
 
+    fun logout(activityContext: Context) {
+        token = null
+        spotifyAuthManager.logout(activityContext)
+    }
+
+
     private fun refreshToken(newToken: String?) {
         newToken?.let {
             playlistRepository.setSpotifyApiManager(get { parametersOf(newToken) })
         }
         tokenData.value = newToken
     }
+
 }

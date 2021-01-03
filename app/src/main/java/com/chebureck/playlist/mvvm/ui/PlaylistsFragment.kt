@@ -1,5 +1,6 @@
 package com.chebureck.playlist.mvvm.ui
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -66,6 +67,11 @@ class PlaylistsFragment :
         val playlists = view.findViewById<RecyclerView>(R.id.playlists)
 
         exitButton.setText(R.string.exit)
+
+        exitButton.setOnClickListener {
+            spotifyViewModel.logout(activity as Activity)
+            navController.navigate(R.id.authFragment)
+        }
 
         plusButton.startAnimation(animation)
         plusButton.setOnClickListener {
