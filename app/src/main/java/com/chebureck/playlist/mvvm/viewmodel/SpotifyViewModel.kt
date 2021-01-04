@@ -95,12 +95,10 @@ class SpotifyViewModel(
         spotifyAuthManager.logout(activityContext)
     }
 
-
     private fun refreshToken(newToken: String?) {
         newToken?.let {
             playlistRepository.setSpotifyApiManager(get { parametersOf(newToken) })
         }
         tokenData.value = newToken
     }
-
 }

@@ -6,12 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.chebureck.playlist.R
 import com.chebureck.playlist.db.Playlist
 
 class PlaylistViewHolder(
     itemView: View,
-    playlistClickListener: PlaylistClickListener
+    playlistClickListener: PlaylistClickListener,
+    isInCreatingFragment: Boolean
 ) : RecyclerView.ViewHolder(itemView) {
 
     private var playlistName = itemView.findViewById<TextView>(R.id.tv_name)
@@ -27,23 +29,32 @@ class PlaylistViewHolder(
         itemView.setOnClickListener {
             playlistClickListener.onPlaylistClicked(adapterPosition)
         }
-        itemView.setOnLongClickListener {
-            selected = !selected
-            val newColor = if (selected) {
-                Color.GREEN
-            } else {
-                Color.TRANSPARENT
+        if (isInCreatingFragment) {
+            itemView.setOnLongClickListener {
+                selected = !selected
+                val newColor = if (selected) {
+                    Color.GREEN
+                } else {
+                    Color.TRANSPARENT
+                }
+                itemView.setBackgroundColor(newColor)
+                playlistClickListener.onPlaylistLongClicked(adapterPosition, selected)
+                true
             }
-            itemView.setBackgroundColor(newColor)
-            playlistClickListener.onPlaylistLongClicked(adapterPosition, selected)
-            true
         }
     }
 
     fun bind(playlist: Playlist) {
         playlistName.text = playlist.name
         playlist.imageUrl?.let {
-            Glide.with(playlistImage).load(it).into(playlistImage)
+            Glide.with(playlistImage)
+                .applyDefaultRequestOptions(
+                    RequestOptions()
+                        .placeholder(R.drawable.progress_bar)
+                        .fallback(R.drawable.default_playlist)
+                )
+                .load(it)
+                .into(playlistImage)
         } ?: playlistImage.setImageDrawable(null)
     }
 }

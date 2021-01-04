@@ -8,7 +8,8 @@ import com.chebureck.playlist.R
 import com.chebureck.playlist.db.Playlist
 
 class PlaylistsAdapter(
-    private val listener: PlaylistAdapterClickListener
+    private val listener: PlaylistAdapterClickListener,
+    private val isInCreatingFragment: Boolean = false
 ) : RecyclerView.Adapter<PlaylistViewHolder>(), PlaylistViewHolder.PlaylistClickListener {
 
     interface PlaylistAdapterClickListener : PlaylistViewHolder.PlaylistClickListener
@@ -23,7 +24,7 @@ class PlaylistsAdapter(
         val inflater = LayoutInflater.from(parent.context)
         val layout: View = inflater.inflate(R.layout.item_playlist, parent, false)
 
-        return PlaylistViewHolder(layout, this)
+        return PlaylistViewHolder(layout, this, isInCreatingFragment)
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
