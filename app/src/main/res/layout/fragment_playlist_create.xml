@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
 
     <EditText
@@ -38,6 +38,7 @@
 
     <!-- TODO learn how to eliminate this warning problem -->
     <Button
+            style="@style/ButtonView"
             android:id="@+id/btn_and"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,13 +49,11 @@
 
             android:layout_toStartOf="@id/btn_or"
             android:layout_alignTop="@id/btn_or"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp" />
 
     <Button
             android:id="@+id/btn_or"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ButtonView"
 
             android:background="@drawable/button"
             android:text="@string/or"
@@ -67,9 +66,7 @@
 
     <Button
             android:id="@+id/btn_xor"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ButtonView"
 
             android:background="@drawable/button"
             android:text="@string/xor"
