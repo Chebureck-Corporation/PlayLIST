@@ -1,6 +1,7 @@
 package com.chebureck.playlist.network.api.spotify
 
 import android.app.Activity
+import android.content.Context
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
@@ -30,6 +31,7 @@ class SpotifyAuthManager(private val clientId: String) {
             request
         )
     }
+    fun logout(activityContext: Context) = AuthorizationClient.clearCookies(activityContext)
 
     companion object {
         const val REQUEST_CODE = 1337

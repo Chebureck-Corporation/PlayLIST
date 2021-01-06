@@ -67,7 +67,7 @@ class PlaylistRepository(
     suspend fun unfollowPlaylist(playlist: PlaylistWithTracks) {
         withContext(Dispatchers.IO) {
             if (playlist.spotifyId != null) {
-                spotifyApiManager?.unFollowPlaylist(playlist)
+                spotifyApiManager?.unfollowPlaylist(playlist)
             } else {
                 playlistDao.deletePlaylistWithTracks(playlist)
             }

@@ -20,7 +20,10 @@ class PlaylistCreateFragment :
     private val playlistCreateViewModel
     by sharedViewModel<PlaylistCreateViewModel>()
 
-    private val playlistsAdapter = PlaylistsAdapter(this)
+    private val playlistsAdapter = PlaylistsAdapter(
+        this@PlaylistCreateFragment,
+        isInCreatingFragment = true
+    )
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
