@@ -7,7 +7,10 @@ class SpotifyApiPlaylist(
     val tracks: Tracks
 ) {
     val imageUrl: String?
-        get() = images?.let { it[0].url }
+        get() = when (images?.isEmpty()) {
+            false -> images[0].url
+            else -> null
+        }
 }
 
 data class Image(
