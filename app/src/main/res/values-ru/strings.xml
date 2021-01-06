@@ -4,7 +4,7 @@
     <string name="or">ИЛИ</string>
     <string name="xor">XOR</string>
     <string name="and">И</string>
-    <string name="dots">…</string>
+    <string name="dots">. . .</string>
     <string name="add">Добавить</string>
     <string name="create">Создать</string>
     <string name="playlist_name">Название плейлиста</string>

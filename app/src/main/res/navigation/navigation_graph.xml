@@ -64,7 +64,7 @@
             android:id="@+id/optionsFragment"
             android:name="com.chebureck.playlist.mvvm.ui.widget.dialog.OptionsFragment"
             android:label="OptionsFragment"
-            tools:layout="@layout/options_fragment" >
+            tools:layout="@layout/fragment_options" >
         <action
                 android:id="@+id/action_optionsFragment_to_editFragment"
                 app:destination="@id/editFragment" />
@@ -76,7 +76,7 @@
             android:id="@+id/editFragment"
             android:name="com.chebureck.playlist.mvvm.ui.widget.dialog.EditFragment"
             android:label="EditFragment"
-            tools:layout="@layout/edit_fragment" >
+            tools:layout="@layout/fragment_edit" >
         <action
                 android:id="@+id/action_editFragment_to_playlistsFragment"
                 app:destination="@id/playlistsFragment" />

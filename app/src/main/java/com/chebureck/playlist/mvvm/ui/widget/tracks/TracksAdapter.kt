@@ -20,7 +20,7 @@ class TracksAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.track, parent, false)
+        val view = inflater.inflate(R.layout.item_track, parent, false)
 
         return TrackViewHolder(view, this)
     }

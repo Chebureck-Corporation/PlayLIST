@@ -38,9 +38,7 @@
             android:layout_alignParentEnd="true" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/playlists"
-
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -48,7 +46,23 @@
             android:layout_above="@id/btn_exit"
 
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/playlists"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp" />
+    </androidx.cardview.widget.CardView>
+
 
     <Button
             android:id="@+id/btn_exit"
