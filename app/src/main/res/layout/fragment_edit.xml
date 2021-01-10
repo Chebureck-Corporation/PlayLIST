@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="end">
+
     <EditText
             android:id="@+id/edit_name"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:padding="5dp"
-            android:gravity="center"
-            />
+            android:gravity="center" />
+
     <Button
             android:id="@+id/edit_button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            style="@style/ButtonView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
             android:padding="5dp"
-            android:gravity="center"
-            android:text="@string/edit"
-            />
+            android:text="@string/ok" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -28,7 +28,7 @@ class EditFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.edit_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_edit, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

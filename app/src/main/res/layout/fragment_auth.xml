@@ -4,33 +4,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-            android:text="@string/string_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_login"
-            android:layout_marginTop="63dp"
-            android:layout_centerHorizontal="true"
-            android:textSize="24sp" />
 
     <ImageView
+            android:id="@+id/image_icon"
+
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+
             android:layout_width="120dp"
             android:layout_height="120dp"
-            app:srcCompat="@drawable/image_icon"
-            android:id="@+id/image_icon"
+
+            app:srcCompat="@drawable/ic_icon"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/text_login"
-            android:layout_marginTop="36dp" />
+            android:layout_marginTop="96dp" />
 
     <Button
-            android:text="@string/string_sign"
-            android:layout_marginEnd="36dp"
-            android:layout_marginStart="36dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_icon"
-            android:layout_marginTop="264dp"
             android:id="@+id/btn_sign"
-            android:textSize="18sp" />
+
+            style="@style/ButtonView"
+            android:textSize="18sp"
+
+            android:text="@string/string_sign"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/image_icon"
+            android:layout_marginTop="264dp" />
 
 </RelativeLayout>
