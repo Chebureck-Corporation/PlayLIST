@@ -51,10 +51,9 @@ class PlaylistViewHolder(
                 .applyDefaultRequestOptions(
                     RequestOptions()
                         .placeholder(R.drawable.progress_bar)
-                        .fallback(R.drawable.default_playlist)
                 )
                 .load(it)
                 .into(playlistImage)
-        } ?: playlistImage.setImageDrawable(null)
+        } ?: playlistImage.setImageResource(R.drawable.default_playlist)
     }
 }
