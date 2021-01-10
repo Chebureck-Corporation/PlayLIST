@@ -32,7 +32,7 @@ class PlaylistCreateViewModel(
         }
     }
 
-    fun setSelectedPlaylist(playlist: PlaylistCreateData?) {
+    fun setSelectedPlaylist(playlist: PlaylistCreateData?, position: Int?) {
         selectedPlaylist.value = playlist
     }
 
@@ -70,11 +70,12 @@ class PlaylistCreateViewModel(
         it.selected
     }
 
-    private fun createNewPlaylistRAM(tracks: List<TrackCreateData>, name: String) = PlaylistCreateData(
-        null,
-        tracks,
-        name
-    )
+    private fun createNewPlaylistRAM(tracks: List<TrackCreateData>, name: String) =
+        PlaylistCreateData(
+            null,
+            tracks,
+            name
+        )
 
     private fun saveCreatedPlaylist(createdPlaylist: PlaylistCreateData) {
         viewModelScope.launch {

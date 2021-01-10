@@ -18,7 +18,7 @@ class PlaylistCreateFragment :
     PlaylistsAdapter.PlaylistAdapterClickListener {
 
     private val playlistCreateViewModel
-    by sharedViewModel<PlaylistCreateViewModel>()
+            by sharedViewModel<PlaylistCreateViewModel>()
 
     private val playlistsAdapter = PlaylistsAdapter(
         this@PlaylistCreateFragment,
@@ -32,6 +32,11 @@ class PlaylistCreateFragment :
                 Playlist(null, it.imageUrl, it.name)
             }
         }
+        playlistCreateViewModel.getPlaylists().observe(viewLifecycleOwner) { newPlaylists ->
+            playlistsAdapter.selectedList = newPlaylists.map {
+                it.selected
+            }
+        }
         playlistCreateViewModel.getCreatedPlaylist().observe(viewLifecycleOwner) {
             if (it.getContentIfNotHandledOrReturnNull() != null) {
                 val action = PlaylistCreateFragmentDirections.actionPlaylistCreated()
@@ -42,12 +47,11 @@ class PlaylistCreateFragment :
 
     override fun onResume() {
         super.onResume()
-        playlistCreateViewModel.setSelectedPlaylist(null)
+        playlistCreateViewModel.setSelectedPlaylist(null, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val binding = FragmentPlaylistCreateBinding.bind(view)
 
         val playlistsView = binding.playlists
@@ -79,7 +83,8 @@ class PlaylistCreateFragment :
         playlistCreateViewModel.setSelectedPlaylist(
             playlistCreateViewModel.getPlaylists().value?.get(
                 position
-            )
+            ),
+            position
         )
         val action = PlaylistCreateFragmentDirections.actionPlaylistSelected()
         findNavController().navigate(action)

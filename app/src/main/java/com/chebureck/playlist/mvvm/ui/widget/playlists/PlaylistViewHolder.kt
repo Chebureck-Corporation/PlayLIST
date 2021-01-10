@@ -44,7 +44,11 @@ class PlaylistViewHolder(
         }
     }
 
-    fun bind(playlist: Playlist) {
+    fun bind(playlist: Playlist, selected: Boolean?) {
+        when (selected) {
+            true -> itemView.setBackgroundColor(Color.GREEN)
+            else -> itemView.setBackgroundColor(Color.TRANSPARENT)
+        }
         playlistName.text = playlist.name
         playlist.imageUrl?.let {
             Glide.with(playlistImage)

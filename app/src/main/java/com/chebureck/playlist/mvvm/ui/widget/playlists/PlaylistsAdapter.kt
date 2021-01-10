@@ -19,6 +19,11 @@ class PlaylistsAdapter(
             field = value
             notifyDataSetChanged()
         }
+    var selectedList: List<Boolean>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,8 +33,9 @@ class PlaylistsAdapter(
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        holder.bind(playlists[position])
+        holder.bind(playlists[position], selectedList?.get(position))
     }
+
 
     override fun getItemCount() = playlists.size
 
